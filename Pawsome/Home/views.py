@@ -6,11 +6,13 @@ from .forms import RegistrationForm,PetForm
 def show_prof_form(request):
     reg_form = RegistrationForm()
     pet_form = PetForm()
+    pet_ok = request.POST.get('pet_ok')
     context = {}
 
     if request.method == 'POST':
         reg_form  = RegistrationForm(request.POST)
         pet_form  = PetForm(request.POST)
+
         if reg_form.is_valid() and pet_form.is_valid():
             reg_form.clean_password()
             reg_form.save()
