@@ -9,7 +9,7 @@
 
 <div class="body">
 
-    <form method="POST" action="">
+    <form method="POST" action="" id="my_form">
 
         {% csrf_token %}
 
@@ -34,6 +34,22 @@
 
         </div>
 
+
+        {% if {{ ok_forms}} == True %}
+
+
+            <div class="all-together">
+
+                
+                {{ reg_form.as_p }}
+
+                {{ pet_form.as_p}}
+
+                
+            </div>
+
+
+        {% endif %}
 
 
         <div>
@@ -62,12 +78,17 @@
             
             var ok  = true;
 
+            let my_form = document.getElementById('myForm');
+
+            var form =  new FormData(my_form);
+
             $.ajax({
                 url: "/register",
                 type: "POST",
                 dataType: "json",
                 data: {
                     pet_ok: ok,
+                    form : form,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                     },
                 success : function(json) {
