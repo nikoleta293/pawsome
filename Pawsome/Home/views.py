@@ -1,9 +1,11 @@
 from django.shortcuts import redirect, render
-from .forms import RegistrationForm,PetForm
+from . forms import RegistrationForm,PetForm,LoginForm
+from Users.models import Users
+from django.contrib import messages
 
 # Create your views here.
 
-def show_prof_form(request):
+def show_reg_form(request):
     reg_form = RegistrationForm()
     pet_form = PetForm()
     pet_ok = request.POST.get('pet_ok')
@@ -23,7 +25,7 @@ def show_prof_form(request):
         pet_form.fields['name'] = form.get('name')
         pet_form.fields['age'] = form.get('age')
         pet_form.fields['kind'] = form.get('kind')
-
+        pet_form.fields['img'] = form.get('img')
 
 
 
@@ -42,3 +44,23 @@ def show_prof_form(request):
         
 
 
+def logoutUser():
+    pass
+
+def show_login_form(request):
+    login_form = LoginForm()
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('pasword') 
+       
+       
+        try:
+            user = Users.objects.get(email=email)
+
+        except:
+            messages.error(request,'User does not exist')
+
+
+        if user.get('password') == password:
+            

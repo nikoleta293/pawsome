@@ -59,3 +59,9 @@ class PetForm(ModelForm):
 
 
 
+class LoginForm(ModelForm):
+
+     class Meta:
+        model = User
+        fields = model._meta.get_fields('email','password')
+
