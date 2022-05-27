@@ -1,3 +1,12 @@
+from asyncio.windows_events import NULL
 from django.db import models
+from Users.models import PetOwner
 
-# Create your models here.
+class Pet (models.Model):
+    pet_name = models.CharField(max_length=25)
+    age = models.CharField(max_length=4)
+    gender = models.CharField(max_length=6)
+    kind = models.CharField(max_length=100)
+    health_history = models.TextField()
+    pet_owner = models.ForeignKey(PetOwner, on_delete = models.SET_NULL)
+    

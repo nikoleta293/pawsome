@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'Calendar',
     'Events',
     'Forum',
-    'Donation'
+    'Donation',
+    'Pet'
 
 ]
 
