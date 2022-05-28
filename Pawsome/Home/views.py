@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from . forms import RegistrationForm,PetForm,LoginForm
+#from . forms import RegistrationForm,PetForm,LoginForm
 from Users.models import Users
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -8,11 +8,15 @@ from django.contrib.auth import authenticate, login
 # Create your views here.
 
 def show_reg_form(request):
-    reg_form = RegistrationForm()
-    pet_form = PetForm()
+    pass
+    """
+    #reg_form = RegistrationForm()
+    #pet_form = PetForm()
     pet_ok = request.POST.get('pet_ok')
     #context = {'ok_forms' : False}
     ok_forms = False
+
+    context = {'reg_form' : reg_form , 'pet_form' : pet_form , 'ok_forms' : ok_forms}
 
     if request.method == 'POST' and request.is_ajax():
         data = request.POST.get('data')
@@ -39,18 +43,22 @@ def show_reg_form(request):
             reg_form.clean_password()
             reg_form.save()
             pet_form.save()
+            redirect('login')
         
-    
-    return redirect('loginPage.html')   
+    return render(request,'registerPage.html',context)
 
-        
+      """  
 
 
 def logoutUser():
     pass
 
 def show_login_form(request):
+    pass
+    """
     login_form = LoginForm()
+
+    context = { 'form' : login_form }
 
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -63,3 +71,6 @@ def show_login_form(request):
 
         else:
             messages.error(request,'Invalid Credentials')
+        
+    return render(request,'loginPage.html',context)
+"""

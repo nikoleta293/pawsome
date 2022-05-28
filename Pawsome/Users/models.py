@@ -22,8 +22,8 @@ class Users (AbstractBaseUser):
     is_active = models.BooleanField(default=True )
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    profile_image = models.ImageField(max_length=255,upload_to="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images",null=True,blank=True,default="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images\logo_transparent.png")
-    
+    profile_image =models.ImageField(max_length=255,upload_to="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images",null=True,blank=True,default="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images\logo_transparent.png")
+    confirm_password = models.CharField(max_length=200)
 
     Roles =(
     ('org','Organizations'),
@@ -52,7 +52,7 @@ class Users (AbstractBaseUser):
 
 class PetOwner (Users):
     pet_name = models.CharField(max_length=50)
-    owner_email = models.ForeignKey(Users, on_delete=models.CASCADE,related_name='own_email')
+    owner_email = models.ForeignKey('Users', on_delete=models.CASCADE,related_name='own_email')
     #appointmentList
     
 class Professional (Users):
@@ -61,7 +61,7 @@ class Professional (Users):
     address = models.CharField(max_length=50)
     hours = models.TimeField(auto_now=False, auto_now_add=False)
     telephone = models.CharField(max_length=12)
-    prof_email = models.ForeignKey(Users, on_delete=models.CASCADE,related_name='pro_email')
+    prof_email = models.ForeignKey('Users', on_delete=models.CASCADE,related_name='pro_email')
     #appointmentList
     certificate= models.FileField()
     CV = models.FileField()
@@ -75,7 +75,7 @@ class Organizations(Users):
     address = models.CharField(max_length=50)
     hours = models.TimeField(auto_now=False, auto_now_add=False)
     telephone = models.CharField(max_length=12)
-    org_email = models.ForeignKey(Users, on_delete=models.CASCADE,related_name='organization_email')
+    org_email = models.ForeignKey('Users', on_delete=models.CASCADE,related_name='organization_email')
 
    
 

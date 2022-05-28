@@ -13,7 +13,31 @@
 
         {% csrf_token %}
 
-        {{ reg_form.as_p }}
+        {% for field in reg_form %}
+
+            <p>
+
+                {{field.label_tag}}
+                {{field}}
+
+                {% if field.help_text %}
+
+                    <small style="color:grey;">{{field.help_text}}</small>
+
+                {% endif  %}
+
+
+                {% for error in field.errors %}
+
+
+                    <p style="color: red;">{{error}}</p>
+
+
+                {% endfor %}
+
+            </p>
+
+        {% endfor %}
 
 
         <button id="Open-Pet-Popup">Next</button>
@@ -26,7 +50,31 @@
 
             <div class="popup-content">
 
-                  {{ pet_form.as_p }}
+                {% for field in pet_form %}
+
+                <p>
+    
+                    {{field.label_tag}}
+                    {{field}}
+    
+                    {% if field.help_text %}
+    
+                        <small style="color:grey;">{{field.help_text}}</small>
+    
+                    {% endif  %}
+    
+    
+                    {% for error in field.errors %}
+    
+    
+                        <p style="color: red;">{{error}}</p>
+    
+    
+                    {% endfor %}
+    
+                </p>
+    
+            {% endfor %}
 
 
                   <button id="Close-Pet-Popup">Next</button>

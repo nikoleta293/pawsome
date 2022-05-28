@@ -1,14 +1,18 @@
-from django.forms import ModelForm
-from Pawsome.settings import AUTH_USER_MODEL
+"""from django.forms import ModelForm
+from Users.models import Users
 from Pet.models import Pet
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
-class RegistrationForm(ModelForm):
+class RegistrationForm(UserCreationForm):
 
+    email = forms.EmailField(max_length=60,help_text="Required. Add a valid email address")
+   
     class Meta:
-        model = AUTH_USER_MODEL
-        fields = '__all__'
+        model = Users
+        fields = {"email","username","password","confirm_password"}
 
-
+    
     def clean_password(self):
         cleaned_data = self.cleaned_data
         password = cleaned_data.get('password')
@@ -43,14 +47,13 @@ class RegistrationForm(ModelForm):
                 self.add_error('password_confirm', msg)
         return cleaned_data
 
-    """
     def __str__(self):
         field_values = []
         for field in self.meta.get_all_field_names():
             field_values.append(getattr(self, field, ''))
         return ' '.join(field_values)
     """
-
+"""
 class PetForm(ModelForm):
 
      class Meta:
@@ -62,6 +65,7 @@ class PetForm(ModelForm):
 class LoginForm(ModelForm):
 
      class Meta:
-        model = AUTH_USER_MODEL
+        model = Users
         fields = ['email','password']
 
+"""
