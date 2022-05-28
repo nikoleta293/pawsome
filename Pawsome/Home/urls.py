@@ -1,13 +1,12 @@
 from unicodedata import name
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns=[
 
-    path('',views.home,name="home"),
-    path('login/',views.show_login_form,name='login'),
+    path('login/',views.loginPage,name='login'),
     path('logout/',views.logoutUser,name="logout"),
-    path('registration/',views.show_reg_form,name='register')
-
+    path('registration/',views.registerPage,name='register'),
+    path('forum/',include('Forum.urls'))
 
 ]

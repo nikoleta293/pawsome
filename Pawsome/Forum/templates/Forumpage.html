@@ -1,0 +1,11 @@
+<h1>Post</h1>
+
+{% for post in object_list%}
+   <li>
+        {{post.author}}
+        {{post.post_text}} <br/>
+        {{post.post_time}}
+   </li>
+
+{% endfor%}
+</ul>
