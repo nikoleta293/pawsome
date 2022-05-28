@@ -25,6 +25,9 @@ class Users (AbstractBaseUser):
     profile_image =models.ImageField(max_length=255,upload_to="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images",null=True,blank=True,default="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images\logo_transparent.png")
     confirm_password = models.CharField(max_length=200)
 
+    exclude = ('is_admin','is_active','is_staff','is_superuser')
+
+
     Roles =(
     ('org','Organizations'),
     ('pros','Professional'),

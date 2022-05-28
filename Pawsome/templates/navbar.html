@@ -1,16 +1,25 @@
 <div class="navbar">
     <a class="active" href="/">
 
-        <img src="../Images/logo_transparent.png">
+        <img src="Images/logo_transparent.png">
 
     </a>
-    <a href="Login">Login</a>
-    <a href="contact">Contact</a>
-    <a href="about">About</a>
-    <a href="Logout">Logout</a>
-    <a href="Forum">Forum</a>
-    <a href="Search">Search</a>
-  </div>
+    {% if request.user.is_authenticated %}
+
+        <a href="Logout">Logout</a>
+        <a href="Forum">Forum</a>
+        <a href="Search">Search</a>
+
+    {% else %}
+  
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+        <a href="contact">Contact</a>
+        <a href="about">About</a>
+
+
+    {% endif %}
+</div>
 
 
 <style>

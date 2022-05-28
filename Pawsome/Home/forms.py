@@ -1,4 +1,4 @@
-"""from django.forms import ModelForm
+from django.forms import ModelForm
 from Users.models import Users
 from Pet.models import Pet
 from django.contrib.auth.forms import UserCreationForm
@@ -10,7 +10,7 @@ class RegistrationForm(UserCreationForm):
    
     class Meta:
         model = Users
-        fields = {"email","username","password","confirm_password"}
+        fields = {"email","username","password1","password2"}
 
     
     def clean_password(self):
@@ -38,11 +38,11 @@ class RegistrationForm(UserCreationForm):
             msg = 'Password must contain at least 1 lowercase letter.'
             self.add_error('password', msg)
 
-        password_confirm = cleaned_data.get('password_confirm')
+        confirm_password = cleaned_data.get('confirm_password')
 
 
-        if password and password_confirm:
-            if password != password_confirm:
+        if password and confirm_password:
+            if password != confirm_password:
                 msg = "The two password fields must match."
                 self.add_error('password_confirm', msg)
         return cleaned_data
@@ -52,13 +52,13 @@ class RegistrationForm(UserCreationForm):
         for field in self.meta.get_all_field_names():
             field_values.append(getattr(self, field, ''))
         return ' '.join(field_values)
-    """
-"""
+    
+
 class PetForm(ModelForm):
 
      class Meta:
         model = Pet
-        fields = '__all__'
+        fields = ['pet_name','age','gender','img']
 
 
 
@@ -68,4 +68,3 @@ class LoginForm(ModelForm):
         model = Users
         fields = ['email','password']
 
-"""
