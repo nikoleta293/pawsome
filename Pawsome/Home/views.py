@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render
 from . forms import RegistrationForm,PetForm,LoginForm
 from Users.models import Users
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
+
 
 # Create your views here.
 
@@ -52,15 +54,12 @@ def show_login_form(request):
 
     if request.method == 'POST':
         email = request.POST.get('email')
-        password = request.POST.get('pasword') 
+        password = request.POST.get('password') 
        
-       
-        try:
-            user = Users.objects.get(email=email)
+        user = authenticate(request,username=email,password=password)
 
-        except:
-            messages.error(request,'User does not exist')
+        if user is not None:
+            login(request,user)
 
-
-        if user.get('password') == password:
-            
+        else:
+            messages.error(request,'Invalid Credentials')

@@ -1,11 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
+from . managers import CustomUserManager
 
-class Users (models.Model): 
+class Users (AbstractUser): 
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=200)
-    email = models.EmailField(primary_key=True)
+    email = models.EmailField(primary_key=True,unique=True)
     Roles =(
     ('org','Organizations'),
     ('pros','Professional'),
@@ -13,6 +14,11 @@ class Users (models.Model):
     )
     role = models.CharField(max_length=50, choices=Roles)
    
+    USERNAME_FIELD  = 'email'
+    REQUIRED_FIELDS = ['password']
+
+    objects = CustomUserManager()
+
     def __str__(self):
         return self.email
 
