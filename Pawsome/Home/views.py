@@ -11,7 +11,6 @@ def is_ajax(request):
 
 
 def show_reg_form(request):
-
     reg_form = RegistrationForm()
     pet_form = PetForm()
     pet_ok = request.POST.get('pet_ok')
