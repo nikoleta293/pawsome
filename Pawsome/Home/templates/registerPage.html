@@ -1,0 +1,161 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+{% load static %}
+
+<link rel="stylesheet"  href="{% static 'css/Pet-Popup.css' %}">
+
+<div class="body">
+
+    <form method="POST" action="" id="my_form">
+
+        {% csrf_token %}
+
+        {% for field in reg_form %}
+
+            <p>
+
+                {{field.label_tag}}
+                {{field}}
+
+                {% if field.help_text %}
+
+                    <small style="color:grey;">{{field.help_text}}</small>
+
+                {% endif  %}
+
+
+                {% for error in field.errors %}
+
+
+                    <p style="color: red;">{{error}}</p>
+
+
+                {% endfor %}
+
+            </p>
+
+        {% endfor %}
+
+
+        <button id="Open-Pet-Popup">Next</button>
+        <a href="{% url 'login' %}">Back</a>
+
+
+
+
+        <div id="Pet-Popup">
+
+            <div class="popup-content">
+
+                {% for field in pet_form %}
+
+                <p>
+    
+                    {{field.label_tag}}
+                    {{field}}
+    
+                    {% if field.help_text %}
+    
+                        <small style="color:grey;">{{field.help_text}}</small>
+    
+                    {% endif  %}
+    
+    
+                    {% for error in field.errors %}
+    
+    
+                        <p style="color: red;">{{error}}</p>
+    
+    
+                    {% endfor %}
+    
+                </p>
+    
+            {% endfor %}
+
+
+                  <button id="Close-Pet-Popup">Next</button>
+           </div> 
+
+        </div>
+
+
+        {% if ok_forms == True %}
+
+
+            <div class="all-together">
+
+                
+                {{ reg_form.as_p }}
+
+                {{ pet_form.as_p}}
+
+
+                <input id="register" type="submit" value="Register">
+
+                
+            </div>
+
+
+        {% endif %}
+
+
+        <div>
+
+
+
+            
+
+
+        </div>
+
+    </form>
+
+    <script type="text/javascript">
+
+        var PetPopup = document.getElementById("Pet-Popup")
+        var openPetPopup = document.getElementById("Open-Pet-Popup")
+        var closePetPopup= document.getElementById("Close-Pet-Popup")
+        
+        openPetPopup.addEventListener('click', () => {
+            PetPopup.style.display = "block";
+        })
+        
+        closePetPopup.addEventListener('click', () => {
+            PetPopup.style.display = "none";
+            
+            var ok  = true;
+
+            let my_form = document.getElementById('myForm');
+
+            var form =  new FormData(my_form);
+
+            $.ajax({
+                url: "/register",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    pet_ok: ok,
+                    form : form,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                success : function(json) {
+                    alert("Successfully sent the URL to Django");
+                },
+                error : function(xhr,errmsg,err) {
+                    alert("Could not send URL to Django. Error: " + xhr.status + ": " + xhr.responseText);
+                }
+            });
+        });
+
+    </script>
+
+
+</div>
+
+
+
+{% endblock content %}

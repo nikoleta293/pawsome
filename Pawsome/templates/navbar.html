@@ -1,23 +1,62 @@
-<div class="navbar">
-    <a class="active" href="/">
 
-        <img src="../Images/logo_transparent.png">
+<a class="active" href="/">
 
-    </a>
-    <a href="Login">Login</a>
-    <a href="contact">Contact</a>
-    <a href="about">About</a>
-    <a href="Logout">Logout</a>
-    <a href="Forum">Forum</a>
-    <a href="Search">Search</a>
-  </div>
+    <img src="Images/favicon.png">
 
+</a>
+
+{% load static %}
+
+<!-- CSS Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        
+      </head>
+      <body>
+    
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+          <a class="navbar-brand" href="/">Pawsome</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+    
+        <!-- Optional Javascript -->
+        ...
+      </body>
+    </html>
 
 <style>
 
-    .navbar
-    {
-        display: grid;
+
+    .navbar{
+        background-color: #F6F5D7;
+        margin:0%;
+        padding: 0%;
+        border: 1px solid rgb(0, 0, 0);
     }
+    
+    .title1{
+        font-family: 'sans-serif';
+    }
+
 
 </style>
