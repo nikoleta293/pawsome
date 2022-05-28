@@ -1,12 +1,30 @@
+from contextlib import nullcontext
+from distutils.command import upload
+from re import T
+from unittest.util import _MAX_LENGTH
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser
 
 from . managers import CustomUserManager
 
-class Users (AbstractUser): 
+def get_profile_image_filepath(self,filename):
+    return f'../Images/profile_images/{self.pk}/{"profile_image.png"}'
+
+def get_default_profile_image():
+    return "../Images/logo_tranparent.png"
+
+
+class Users (AbstractBaseUser): 
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=200)
-    email = models.EmailField(primary_key=True,unique=True)
+    email = models.EmailField(primary_key=True,unique=True,verbose_name='email')
+    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True )
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    profile_image = models.ImageField(max_length=255,upload_to="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images",null=True,blank=True,default="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images\logo_transparent.png")
+    
+
     Roles =(
     ('org','Organizations'),
     ('pros','Professional'),
@@ -15,12 +33,21 @@ class Users (AbstractUser):
     role = models.CharField(max_length=50, choices=Roles)
    
     USERNAME_FIELD  = 'email'
-    REQUIRED_FIELDS = ['password']
+    REQUIRED_FIELDS = ['username']
 
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
+    
+    def has_perm (self,perm,obj=None):
+        return self.is_admin
+
+    def has_module_perms(self,app_label):
+        return True
+
+    def get_profile_image_filename(self):
+        return str(self.profile_image)[str(self.profile_image).index(f'profile_image/{self.pk}/'):]
 
 
 class PetOwner (Users):

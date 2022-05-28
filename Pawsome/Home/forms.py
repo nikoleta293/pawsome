@@ -1,11 +1,11 @@
 from django.forms import ModelForm
-from Users.models import User
+from Pawsome.settings import AUTH_USER_MODEL
 from Pet.models import Pet
 
 class RegistrationForm(ModelForm):
 
     class Meta:
-        model = User
+        model = AUTH_USER_MODEL
         fields = '__all__'
 
 
@@ -43,13 +43,13 @@ class RegistrationForm(ModelForm):
                 self.add_error('password_confirm', msg)
         return cleaned_data
 
-
+    """
     def __str__(self):
         field_values = []
-        for field in self._meta.get_all_field_names():
+        for field in self.meta.get_all_field_names():
             field_values.append(getattr(self, field, ''))
         return ' '.join(field_values)
-
+    """
 
 class PetForm(ModelForm):
 
@@ -62,6 +62,6 @@ class PetForm(ModelForm):
 class LoginForm(ModelForm):
 
      class Meta:
-        model = User
-        fields = model._meta.get_fields('email','password')
+        model = AUTH_USER_MODEL
+        fields = ['email','password']
 
