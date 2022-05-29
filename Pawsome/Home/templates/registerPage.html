@@ -5,7 +5,7 @@
 
 {% load static %}
 
-<link rel="stylesheet"  href="{% static 'css/Pet-Popup.css' %}">
+<link rel="stylesheet"  href="{% static 'Pet-Popup.css' %}">
 
 <div class="body">
 
@@ -13,31 +13,34 @@
 
         {% csrf_token %}
 
-        {% for field in reg_form %}
+                {% for field in reg_form %}
 
-            <p>
+                 <div class="form-fields">
+                        <p>
 
-                {{field.label_tag}}
-                {{field}}
+                            <label class="tags" for="{{field.id_for_label}}">{{field.label_tag}}</label>
+                            {{field}}
 
-                {% if field.help_text %}
+                            {% if field.help_text %}
 
-                    <small style="color:grey;">{{field.help_text}}</small>
+                                <small id="help-text" style="color:grey;">{{field.help_text}}</small>
 
-                {% endif  %}
-
-
-                {% for error in field.errors %}
+                            {% endif  %}
 
 
-                    <p style="color: red;">{{error}}</p>
+                            {% for error in field.errors %}
 
+
+                                <p id="errors" style="color: red;">{{error}}</p>
+
+
+                            {% endfor %}
+
+                        </p>
+
+                    </div>
 
                 {% endfor %}
-
-            </p>
-
-        {% endfor %}
 
 
         <button id="Open-Pet-Popup">Next</button>
@@ -159,3 +162,5 @@
 
 
 {% endblock content %}
+
+

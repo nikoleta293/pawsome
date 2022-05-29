@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
-from Pawsome.Forum.models import Post
+from Forum.models import Post
 from .models import Post
 
 

@@ -1,9 +1,4 @@
-body {
-	font-family: arial;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
+
 
 
 #Pet-Popup {
@@ -13,8 +8,7 @@ body {
 	position: absolute;
 	height: 100vh;
 	width: 100%;
-	background-image: url("../../../Images/logo.png");
-
+	background-image: url("Images/logo.png");
 }
 
 .popup-content {
@@ -27,14 +21,27 @@ body {
 }
 
 
-#id_password
+ 
+
+.form-fields
 {
-	width: 200px;
+	display: grid;
+
+	
+	position: relative;
+	top:2vh;
+	left: 40vw;
+
+	grid-template-columns: repeat(1, 20vw [col-start]);
+	grid-template-rows: 0.5rem 1rem 7rem 5rem;
+	gap: 0px 0px;
 }
 
-#id_Username
+#id_password1
 {
 	position: relative;
-	top: 50px;
-	
+	bottom: 5vh;
 }
+
+
+

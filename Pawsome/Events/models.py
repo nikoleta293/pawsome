@@ -3,15 +3,15 @@ from xmlrpc.client import Boolean
 from django.db import models
 from Users.models import PetOwner, Professional
 from django.core.exceptions import ValidationError
-from Pawsome.Users.models import Users
+from Users.models import Users
 
-class Event(models.Models):
+class Event(models.Model):
     Title= models.TextField
     TimeStamp=models.TimeField
     Description=models.TextField
     Notification=models.BooleanField
     Repeat=models.SmallIntegerField
-    pet_owner = models.ForeignKey(PetOwner, on_delete = models.SET_NULL)
+    pet_owner = models.ForeignKey(PetOwner, on_delete = models.CASCADE)
 
 class EventAbstract(models.Model):
     #Event abstract model
@@ -29,8 +29,8 @@ class Events(EventAbstract):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="events")
     title = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=200)
-    notification = models.Boolean(default=False)
-    repeat = models.Boolean(default=False)
+    notification = models.BooleanField(default=False)
+    repeat = models.BooleanField(default=False)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
 
@@ -61,4 +61,4 @@ class Events(EventAbstract):
                             event.start_time) + '-' + str(event.end_time))
 class Appointment(Event):
     isDone=models.BooleanField
-    professional= models.ForeignKey(Professional, on_delete = models.SET_NULL)
+    professional= models.ForeignKey(Professional, on_delete = models.CASCADE)

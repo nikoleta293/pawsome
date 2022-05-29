@@ -10,7 +10,7 @@ def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
-def show_reg_form(request):
+def registerPage(request):
     reg_form = RegistrationForm()
     pet_form = PetForm()
     pet_ok = request.POST.get('pet_ok')
@@ -51,7 +51,7 @@ def show_reg_form(request):
 def logoutUser():
     pass
 
-def show_login_form(request):
+def loginPage(request):
     
     login_form = LoginForm()
 

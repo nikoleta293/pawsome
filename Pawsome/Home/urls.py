@@ -7,6 +7,7 @@ urlpatterns=[
     path('login/',views.loginPage,name='login'),
     path('logout/',views.logoutUser,name="logout"),
     path('registration/',views.registerPage,name='register'),
-    path('forum/',include('Forum.urls'))
+    path('forum/',include('Forum.urls')),
+    path('',views.home,name='home')
 
 ]

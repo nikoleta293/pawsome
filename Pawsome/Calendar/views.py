@@ -3,8 +3,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.utils.safestring import mark_safe
 from Events.models import Events
-from .models import *
-from .models import Calendar
+from . models import Calendar
 
 class CalendarView(generic.ListView):
     model = Events

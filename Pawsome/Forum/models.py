@@ -6,7 +6,7 @@ from Users.models import Users
 
 
 class Post (models.Model): 
-    post_time = models.DateTimeField(auto_now=True, auto_now_add=True)
+    post_time = models.DateTimeField(auto_now_add=True)
     post_text = models.CharField(max_length=200)
     author = models.ForeignKey(Users, on_delete=models.CASCADE)
     
