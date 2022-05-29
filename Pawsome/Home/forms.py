@@ -67,7 +67,7 @@ class PetForm(ModelForm):
 
      class Meta:
         model = Pet
-        fields = ['pet_name','age','gender','img']
+        fields = ['pet_name','age','gender']
 
 
 

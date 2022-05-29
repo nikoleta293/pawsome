@@ -22,9 +22,9 @@
                             {{field}}
 
                             {% if field.help_text %}
-
-                                <small id="help-text" style="color:grey;">{{field.help_text}}</small>
-
+                                <div class="help-fields">
+                                    <small id="help-text" style="color:grey;">{{field.help_text}}</small>
+                                </div>
                             {% endif  %}
 
 
@@ -44,7 +44,7 @@
 
 
         <button id="Open-Pet-Popup">Next</button>
-        <a href="{% url 'login' %}">Back</a>
+        <a id="back" href="{% url 'login' %}">Back</a>
 
 
 
@@ -55,32 +55,36 @@
 
                 {% for field in pet_form %}
 
-                <p>
-    
-                    {{field.label_tag}}
-                    {{field}}
-    
-                    {% if field.help_text %}
-    
-                        <small style="color:grey;">{{field.help_text}}</small>
-    
-                    {% endif  %}
-    
-    
-                    {% for error in field.errors %}
-    
-    
-                        <p style="color: red;">{{error}}</p>
-    
-    
-                    {% endfor %}
-    
-                </p>
+                <div class="form-fields-pet">
+                    <p>
+        
+                        {{field.label_tag}}
+                        {{field}}
+        
+                        {% if field.help_text %}
+        
+                            <small style="color:grey;">{{field.help_text}}</small>
+        
+                        {% endif  %}
+        
+        
+                        {% for error in field.errors %}
+        
+        
+                            <p style="color: red;">{{error}}</p>
+        
+        
+                        {% endfor %}
+        
+                    </p>
+                </div>
     
             {% endfor %}
 
 
                   <button id="Close-Pet-Popup">Next</button>
+                  <button id="Back-Pet-Popup">Back</button>
+
            </div> 
 
         </div>
@@ -122,22 +126,31 @@
         var PetPopup = document.getElementById("Pet-Popup")
         var openPetPopup = document.getElementById("Open-Pet-Popup")
         var closePetPopup= document.getElementById("Close-Pet-Popup")
-        
+        var backPetPopup = document.getElementById("Back-Pet-Popup")
+
+    
+
         openPetPopup.addEventListener('click', () => {
             PetPopup.style.display = "block";
         })
+
+        
+        backPetPopup.addEventListener('click', () => {
+            PetPopup.style.display = "none";
+        })
+
         
         closePetPopup.addEventListener('click', () => {
             PetPopup.style.display = "none";
             
             var ok  = true;
 
-            let my_form = document.getElementById('myForm');
+           // let my_form = document.getElementById('myForm');
 
-            var form =  new FormData(my_form);
+            var form =  $('#my_form').serialize();
 
             $.ajax({
-                url: "/register",
+                url: "{% url 'register' %}",
                 type: "POST",
                 dataType: "json",
                 data: {

@@ -1,14 +1,25 @@
+#Open-Pet-Popup
+{
+	position: relative;
+	left: 45vw;
+}
 
+#back
+{
 
+	position: relative;
+	left: 50vw;
+
+}
 
 #Pet-Popup {
 	display: none;
-	background-color: green;
 	border-color: grey;
-	position: absolute;
-	height: 100vh;
-	width: 100%;
-	background-image: url("Images/logo.png");
+	position: relative;
+	height: 200px;
+	width: 700px;
+	
+	
 }
 
 .popup-content {
@@ -17,7 +28,11 @@
 	margin: 0 auto;
 	background-color: white;
 	width: 400px;
-	top: 2vh;
+	background-image: url("../static/Images/Logo-small.png");
+	bottom: 50vh;
+	background-repeat: no-repeat;
+	left: 8vw;
+
 }
 
 
@@ -25,23 +40,28 @@
 
 .form-fields
 {
-	display: grid;
-
-	
 	position: relative;
-	top:2vh;
-	left: 40vw;
+	left: 45vw;
 
-	grid-template-columns: repeat(1, 20vw [col-start]);
-	grid-template-rows: 0.5rem 1rem 7rem 5rem;
-	gap: 0px 0px;
 }
 
-#id_password1
+
+
+
+label
 {
-	position: relative;
-	bottom: 5vh;
+	display: grid;
+	grid-template-columns: 5vh;
 }
 
 
+.form-fields-pet input
+{
+	width: 200px;
 
+}
+
+#id_img
+{
+	width: 500px;
+}

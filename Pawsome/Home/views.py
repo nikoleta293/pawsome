@@ -21,17 +21,22 @@ def registerPage(request):
         data = request.POST.get('data')
         form = request.POST.get('form')
         ok_forms = data.get('pet_ok')
-        
+     
+       
         reg_form.fields['username'] = form.get('username')
         reg_form.fields['email'] = form.get('email')
-        reg_form.fields['password'] = form.get('password')
-        reg_form.fields['confirm_password'] = form.get('confirm_password')
+        reg_form.fields['password1'] = form.get('password1')
+        reg_form.fields['password2'] = form.get('password2')
 
-        pet_form.fields['pet_name'] = form.get('name')
+        pet_form.fields['pet_name'] = form.get('pet_name')
         pet_form.fields['age'] = form.get('age')
-        pet_form.fields['gender'] = form.get('kind')
-        pet_form.fields['img'] = form.get('img')
+        pet_form.fields['gender'] = form.get('gender')
         
+        reg_form = RegistrationForm(instance=reg_form)
+        pet_form = PetForm(initial=pet_form)
+        context = {'reg_form' : reg_form , 'pet_form' : pet_form , 'ok_forms' : ok_forms}
+
+
 
 
     if request.method == 'POST' and ok_forms == True:
