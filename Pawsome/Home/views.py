@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import redirect, render
 from . forms import RegistrationForm,PetForm,LoginForm
 from Users.models import Users
@@ -13,42 +14,43 @@ def is_ajax(request):
 def registerPage(request):
     reg_form = RegistrationForm()
     pet_form = PetForm()
-    pet_ok = request.POST.get('pet_ok')
     ok_forms = False    
     context = {'reg_form' : reg_form , 'pet_form' : pet_form , 'ok_forms' : ok_forms}
 
-    if request.method == 'POST' and is_ajax(request=request):
-        data = request.POST.get('data')
-        form = request.POST.get('form')
-        ok_forms = data.get('pet_ok')
-     
+    if request.method == 'POST' and is_ajax(request=request) == True:
+        reg_form = RegistrationForm(instance=request.POST.get('reg_form'))
+        pet_form = PetForm(instance=request.POST.get('pet_form'))
+        
+        ok_forms = True
+
        
-        reg_form.fields['username'] = form.get('username')
+        """ reg_form.fields['username'] = form['username']
         reg_form.fields['email'] = form.get('email')
         reg_form.fields['password1'] = form.get('password1')
         reg_form.fields['password2'] = form.get('password2')
 
         pet_form.fields['pet_name'] = form.get('pet_name')
         pet_form.fields['age'] = form.get('age')
-        pet_form.fields['gender'] = form.get('gender')
+        pet_form.fields['gender'] = form.get('gender') """
         
-        reg_form = RegistrationForm(instance=reg_form)
-        pet_form = PetForm(initial=pet_form)
-        context = {'reg_form' : reg_form , 'pet_form' : pet_form , 'ok_forms' : ok_forms}
+        """ reg_form = RegistrationForm(instance=reg_form)
+        pet_form = PetForm(instance=pet_form) """
+        context = {'reg_form' : reg_form , 'pet_form' : pet_form, 'ok_forms' : ok_forms }
+   
+        return render(request,'registerPage.html',context)
+        
 
-
-
-
-    if request.method == 'POST' and ok_forms == True:
-        reg_form  = RegistrationForm(request.POST)
-        pet_form  = PetForm(request.POST)
+    
+    if request.method == 'POST' and is_ajax(request=request) == False :
+        reg_form  = RegistrationForm(instance=request.POST)
+        pet_form  = PetForm(instance=request.POST)
 
         if reg_form.is_valid() and pet_form.is_valid():
             reg_form.clean_password()
             reg_form.save()
             pet_form.save()
             redirect('login')
-        
+
     return render(request,'registerPage.html',context)
 
 

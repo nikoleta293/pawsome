@@ -24,7 +24,7 @@ class RegistrationForm(UserCreationForm):
     
     def clean_password(self):
         cleaned_data = self.cleaned_data
-        password = cleaned_data.get('password')
+        password = cleaned_data.get('password1')
 
         # check for min length
         min_length = 8
@@ -47,7 +47,7 @@ class RegistrationForm(UserCreationForm):
             msg = 'Password must contain at least 1 lowercase letter.'
             self.add_error('password', msg)
 
-        confirm_password = cleaned_data.get('confirm_password')
+        confirm_password = cleaned_data.get('password2')
 
 
         if password and confirm_password:
