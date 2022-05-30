@@ -55,4 +55,4 @@ class Events(EventAbstract):
 
 class Appointment(Events):
     isDone=models.BooleanField
-    professional= models.ForeignKey(Professional, on_delete = models.SET_NULL)
+    professional= models.ForeignKey(Professional, on_delete = models.SET_NULL, null=True)
