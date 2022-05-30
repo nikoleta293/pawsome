@@ -1,5 +1,8 @@
-<h1>Post</h1>
+{% block content %}
 
+<h1>Forum</h1>
+
+<ul>
 {% for post in object_list%}
    <li>
         {{post.author}}
@@ -9,3 +12,7 @@
 
 {% endfor%}
 </ul>
+
+
+
+{% endblock %}
