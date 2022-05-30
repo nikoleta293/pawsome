@@ -1,44 +1,58 @@
+from sqlite3 import TimestampFromTicks
+from xmlrpc.client import Boolean
 from django.db import models
-from datetime import datetime, timedelta
-from calendar import HTMLCalendar
-from Events.models import Events 
+from Users.models import PetOwner, Professional,Users
+from django.core.exceptions import ValidationError
+  
+
+class EventAbstract(models.Model):
+    #Event abstract model
+
+    is_active = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+class Events(EventAbstract):
+
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="events")
+    # pet_owner = models.ForeignKey(PetOwner, on_delete = models.SET_NULL)
+    title = models.CharField(max_length=200, unique=True)
+    description = models.TextField(max_length=200)
+    notification = models.BooleanField(default=False)
+    repeat = models.BooleanField(default=False)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
 
 
+    #checks for overlap
+    def check_event(self, fixed_start, fixed_end, new_start, new_end):
+        overlap = False
+        if new_start == fixed_end or new_end == fixed_start:    #edge case
+            overlap = False
+        elif (new_start >= fixed_start and new_start <= fixed_end) or (new_end >= fixed_start and new_end <= fixed_end): #innner limits
+            overlap = True
+        elif new_start <= fixed_start and new_end >= fixed_end: #outter limits
+            overlap = True
+ 
+        return overlap
 
 
-class Calendar(HTMLCalendar):
-	def __init__(self, year=None, month=None):
-		self.year = year
-		self.month = month
-		super(Calendar, self).__init__()
+    def clean(self):
+        if self.end_time <= self.start_time:
+            raise ValidationError('Ending hour must be after the starting hour')
 
-	# formats a day as a td
-	# filter events by day
-	def formatday(self, day, events):
-		events_per_day = events.filter(start_time=day)
-		d = ''
-		for event in events_per_day:
-			d += f'<li> {event.title} </li>'
+        events = Events.objects.filter(day=self.day)
+        if events.exists():
+            for event in events:
+                if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
+                    raise ValidationError(
+                        'There is an overlap with another event: ' + str(event.day) + ', ' + str(
+                            event.start_time) + '-' + str(event.end_time))
 
-		if day != 0:
-			return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
-		return '<td></td>'
-
-	# formats a week as a tr 
-	def formatweek(self, theweek, events):
-		week = ''
-		for d, weekday in theweek:
-			week += self.formatday(d, events)
-		return f'<tr> {week} </tr>'
-
-	# formats a month as a table
-	# filter events by year and month
-	def formatmonth(self, withyear=True):
-		events = Events.objects.filter(start_time__year=self.year, start_time__month=self.month)
-
-		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
-		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
-		cal += f'{self.formatweekheader()}\n'
-		for week in self.monthdays2calendar(self.year, self.month):
-			cal += f'{self.formatweek(week, events)}\n'
-		return cal
+class Appointment(Events):
+    isDone=models.BooleanField
+    professional= models.ForeignKey(Professional, on_delete = models.SET_NULL)
