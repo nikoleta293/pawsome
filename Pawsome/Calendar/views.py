@@ -1,10 +1,14 @@
-from datetime import datetime
+from datetime import date, datetime
 from django.shortcuts import render
 from django.views import generic
 from django.utils.safestring import mark_safe
-from Events.models import Events
 from .models import *
-from .models import Calendar
+from .models import Events
+from django.http import HttpResponse
+from .utils import Calendar
+
+def index(request):
+    return HttpResponse('hello')
 
 class CalendarView(generic.ListView):
     model = Events

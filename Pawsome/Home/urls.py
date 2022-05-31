@@ -4,9 +4,9 @@ from . import views
 
 urlpatterns=[
 
-    path('login/',views.loginPage,name='login'),
+    path('login/',views.show_login_form,name='login'),
     path('logout/',views.logoutUser,name="logout"),
-    path('registration/',views.registerPage,name='register'),
+    path('registration/',views.show_reg_form,name='register'),
     path('forum/',include('Forum.urls'))
 
 ]

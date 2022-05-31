@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'Users',
     'Home',
     'Calendar',
-    'Events',
     'Forum',
     'Donation',
     'Pet'
