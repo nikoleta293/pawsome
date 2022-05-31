@@ -1,15 +1,16 @@
 from django import forms
 from .models import Post
+from django.forms import TextInput
 
 class PostForm (forms.ModelForm):
     class Meta: 
         model=Post 
-        fields = ('author', 'post_time', 'post_text')
+        fields = ('author','post_text')
         
         widgets = {
-            'author': forms.Select(attrs={'class': 'form-control' }), 
+            'author': TextInput(attrs={'class': 'post_form','id' : 'author'}),
             #'post_time': forms.forms.DateTimeField(, required=False) 
-            'post_text': forms.CharField({'required': True},{'size': '200'})
+            'post_text': TextInput(attrs={'class': 'post_form','id' : 'email'}),
             
             
         }     

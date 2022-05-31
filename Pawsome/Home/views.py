@@ -36,11 +36,8 @@ def registerPage(request):
         """ reg_form = RegistrationForm(instance=reg_form)
         pet_form = PetForm(instance=pet_form) """
         context = {'reg_form' : reg_form , 'pet_form' : pet_form, 'ok_forms' : ok_forms }
-   
-        return render(request,'registerPage.html',context)
         
 
-    
     if request.method == 'POST' and is_ajax(request=request) == False :
         reg_form  = RegistrationForm(instance=request.POST)
         pet_form  = PetForm(instance=request.POST)
@@ -49,7 +46,7 @@ def registerPage(request):
             reg_form.clean_password()
             reg_form.save()
             pet_form.save()
-            redirect('login')
+            redirect('login/')
 
     return render(request,'registerPage.html',context)
 

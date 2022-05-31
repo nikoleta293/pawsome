@@ -4,6 +4,7 @@ from re import T
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from Calendar.models import Appointment,Events
 
 from . managers import CustomUserManager
 
@@ -24,6 +25,7 @@ class Users (AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     profile_image =models.ImageField(max_length=255,upload_to="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images",null=True,blank=True,default="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images\logo_transparent.png")
     confirm_password = models.CharField(max_length=200)
+    events = models.ManyToManyField(Events)
 
     exclude = ('is_admin','is_active','is_staff','is_superuser')
 
@@ -55,7 +57,7 @@ class Users (AbstractBaseUser):
 
 class PetOwner (Users):
     pet_name = models.CharField(max_length=50)
-    owner_email = models.ForeignKey('Users', on_delete=models.CASCADE,related_name='own_email')
+    owner_email = models.OneToOneField('Users', on_delete=models.CASCADE,related_name='own_email')
     #appointmentList
     
 class Professional (Users):
@@ -64,7 +66,8 @@ class Professional (Users):
     address = models.CharField(max_length=50)
     hours = models.TimeField(auto_now=False, auto_now_add=False)
     telephone = models.CharField(max_length=12)
-    prof_email = models.ForeignKey('Users', on_delete=models.CASCADE,related_name='pro_email')
+    prof_email = models.OneToOneField('Users', on_delete=models.CASCADE,related_name='pro_email')
+    appointment =  models.ManyToManyField(Appointment)
     #appointmentList
     certificate= models.FileField()
     CV = models.FileField()
@@ -78,7 +81,7 @@ class Organizations(Users):
     address = models.CharField(max_length=50)
     hours = models.TimeField(auto_now=False, auto_now_add=False)
     telephone = models.CharField(max_length=12)
-    org_email = models.ForeignKey('Users', on_delete=models.CASCADE,related_name='organization_email')
+    org_email = models.OneToOneField('Users', on_delete=models.CASCADE,related_name='organization_email')
 
    
 

@@ -1,7 +1,6 @@
 from sqlite3 import TimestampFromTicks
 from xmlrpc.client import Boolean
 from django.db import models
-from Users.models import PetOwner, Professional,Users
 from django.core.exceptions import ValidationError
   
 
@@ -18,8 +17,6 @@ class EventAbstract(models.Model):
 
 class Events(EventAbstract):
 
-    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="events")
-    # pet_owner = models.ForeignKey(PetOwner, on_delete = models.SET_NULL)
     title = models.CharField(max_length=200, unique=True)
     description = models.TextField(max_length=200)
     notification = models.BooleanField(default=False)
@@ -55,4 +52,3 @@ class Events(EventAbstract):
 
 class Appointment(Events):
     isDone=models.BooleanField
-    professional= models.ForeignKey(Professional, on_delete = models.SET_NULL)
