@@ -1,0 +1,39 @@
+
+label
+{
+	display: grid;
+	grid-template-columns: 5vh;
+}
+
+
+.form-fields-pet input
+{
+	width: 200px;
+
+}
+
+.all-fields-pet
+{
+    position: relative;
+    left: 60vw;
+    bottom: 45vh;
+
+}
+
+
+.all-fields-reg
+{
+    position: relative;
+    left: 5vw;
+}
+
+
+.buttons
+{
+    display: inline-flex;
+    position: relative;
+    left: 40vw;
+    bottom: 20vh;
+    justify-content: space-between;
+    column-gap: 50px;
+}

@@ -58,7 +58,7 @@ class RegistrationForm(UserCreationForm):
 
     def __str__(self):
         field_values = []
-        for field in self.meta.get_all_field_names():
+        for field in self._meta.get_fields():
             field_values.append(getattr(self, field, ''))
         return ' '.join(field_values)
     
@@ -73,7 +73,13 @@ class PetForm(ModelForm):
 
 class LoginForm(ModelForm):
 
+
+     password = forms.CharField(widget=forms.PasswordInput)
+
+
      class Meta:
         model = Users
-        fields = ['email','password']
+        fields = {'email','password'}
 
+    
+     field_order = ['email', 'password']

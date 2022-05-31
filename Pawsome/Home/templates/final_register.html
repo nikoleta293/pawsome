@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+
+
+
+
+{% block content %}
+
+
+  {% load static %}
+
+   <link rel="stylesheet"  href="{% static 'final_reg.css' %}">
+
+  <form method="POST" action="" id="all_reg_form">
+
+    {% csrf_token %}
+
+
+
+    <div class="all-together">
+
+        {% for field in reg_form %}
+
+        <div class="all-fields-reg">
+                <p>
+
+                    <label class="tags" for="{{field.id_for_label}}">{{field.label_tag}}</label>
+                    {{field}}
+                    
+                    {% if field.help_text %}
+                        <div class="help-fields">
+                            <small id="help-text" style="color:grey;">{{field.help_text}}</small>
+                        </div>
+                    {% endif  %}
+
+
+                    {% for error in field.errors %}
+
+
+                        <p id="errors" style="color: red;">{{error}}</p>
+
+
+                    {% endfor %}
+
+                </p>
+
+            </div>
+
+        {% endfor %}
+        
+        {% for field in pet_form %}
+
+                    <div class="all-fields-pet">
+                        <p>
+            
+                            {{field.label_tag}}
+                            {{field}}
+            
+                            {% if field.help_text %}
+            
+                                <small style="color:grey;">{{field.help_text}}</small>
+            
+                            {% endif  %}
+            
+            
+                            {% for error in field.errors %}
+            
+            
+                                <p style="color: red;">{{error}}</p>
+            
+            
+                            {% endfor %}
+            
+                        </p>
+                    </div>
+        
+        {% endfor %}
+
+      <div class="buttons">
+        <input id="register" type="submit" value="Register">
+        <a id="back" href="{% url 'login' %}">Back</a>
+      </div>
+  </div>
+</form>
+{% endblock content %}

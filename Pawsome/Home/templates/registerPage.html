@@ -9,193 +9,186 @@
 
 <div class="body">
 
-    <form method="POST" action="" id="reg_form">
+        <form method="POST" action="" id="reg_form">
 
-        {% csrf_token %}
+            {% csrf_token %}
 
-                {% for field in reg_form %}
+                    {% for field in reg_form %}
 
-                 <div class="form-fields">
-                        <p>
+                    <div class="form-fields">
+                            <p>
 
-                            <label class="tags" for="{{field.id_for_label}}">{{field.label_tag}}</label>
-                            {{field}}
+                                <label class="tags" for="{{field.id_for_label}}">{{field.label_tag}}</label>
+                                {{field}}
 
-                            {% if field.help_text %}
-                                <div class="help-fields">
-                                    <small id="help-text" style="color:grey;">{{field.help_text}}</small>
+                                {% if field.help_text %}
+                                    <div class="help-fields">
+                                        <small id="help-text" style="color:grey;">{{field.help_text}}</small>
+                                    </div>
+                                {% endif  %}
+
+
+                                {% for error in field.errors %}
+
+
+                                    <p id="errors" style="color: red;">{{error}}</p>
+
+
+                                {% endfor %}
+
+                            </p>
+
+                        </div>
+
+                    {% endfor %}
+
+            <button id="Open-Pet-Popup">Next</button>
+            <a id="back" href="{% url 'login' %}">Back</a>
+
+
+
+
+            <div id="Pet-Popup">
+
+                <div class="popup-content">
+
+                            {% for field in pet_form %}
+
+                                <div class="form-fields-pet">
+                                    <p>
+                        
+                                        {{field.label_tag}}
+                                        {{field}}
+                        
+                                        {% if field.help_text %}
+                        
+                                            <small style="color:grey;">{{field.help_text}}</small>
+                        
+                                        {% endif  %}
+                        
+                        
+                                        {% for error in field.errors %}
+                        
+                        
+                                            <p style="color: red;">{{error}}</p>
+                        
+                        
+                                        {% endfor %}
+                        
+                                    </p>
                                 </div>
-                            {% endif  %}
+                    
+                                {% endfor %}
 
+                                
+         
 
-                            {% for error in field.errors %}
+                    <input class="btn btn-primary cfg" type="submit" value="Next">
+                    <button id="Back-Pet-Popup">Back</button>
 
-
-                                <p id="errors" style="color: red;">{{error}}</p>
-
-
-                            {% endfor %}
-
-                        </p>
-
-                    </div>
-
-                {% endfor %}
-
+                </div> 
+            </div>
+            
         </form>
 
+</div>
 
-        <button id="Open-Pet-Popup">Next</button>
-        <a id="back" href="{% url 'login' %}">Back</a>
-
-
+{% endblock content %}
 
 
-        <div id="Pet-Popup">
-
-            <div class="popup-content">
-
-               <form method="POST" action="" id="pet_form">
-
-                  {% csrf_token %}
-
-                        {% for field in pet_form %}
-
-                            <div class="form-fields-pet">
-                                <p>
-                    
-                                    {{field.label_tag}}
-                                    {{field}}
-                    
-                                    {% if field.help_text %}
-                    
-                                        <small style="color:grey;">{{field.help_text}}</small>
-                    
-                                    {% endif  %}
-                    
-                    
-                                    {% for error in field.errors %}
-                    
-                    
-                                        <p style="color: red;">{{error}}</p>
-                    
-                    
-                                    {% endfor %}
-                    
-                                </p>
-                            </div>
-                
-                            {% endfor %}
-
-                            
-                    </form>
-
-                  <button id="Close-Pet-Popup">Next</button>
-                  <button id="Back-Pet-Popup">Back</button>
-
-           </div> 
-
-        </div>
-
-
-        {% if  %}
-ok_forms is not False
-                
-            <form method="POST" action="" id="all_form">
-
-                {% csrf_token %}
-
-
-                <div class="all-together">
-
-                    
-                    {{ reg_form.as_p }}
-
-                    {{ pet_form.as_p}}
-
-
-                    <input id="register" type="submit" value="Register">
-
-                    
-                </div>
-
-            </form>
-
-
-        {% endif %}
-
-
-
-
-    <script type="text/javascript">
-
-        var PetPopup = document.getElementById("Pet-Popup")
-        var openPetPopup = document.getElementById("Open-Pet-Popup")
-        var closePetPopup= document.getElementById("Close-Pet-Popup")
-        var backPetPopup = document.getElementById("Back-Pet-Popup")
-
+   {% block javascript %}
     
+        <script type="text/javascript" window.CSRF_TOKEN = "{{ csrf_token }}";>
 
-        openPetPopup.addEventListener('click', () => {
-            PetPopup.style.display = "block";
-        })
+            var PetPopup = document.getElementById("Pet-Popup")
+            var openPetPopup = document.getElementById("Open-Pet-Popup")
+            //var closePetPopup= document.getElementById("Close-Pet-Popup")
+            var backPetPopup = document.getElementById("Back-Pet-Popup")
 
-        
-        backPetPopup.addEventListener('click', () => {
-            PetPopup.style.display = "none";
-        })
-
-        
-        closePetPopup.addEventListener('click', (e) => {
-            PetPopup.style.display = "none";
-            
-            e.preventDefault();
-            //let ok  = 1;
-
-           // let my_form = document.getElementById('myForm');
-
-            var reg_form_ser = $('form[name="reg_form"]').serialize();
-            var pet_form_ser =  $('form[name="pet_form"]').serialize();
-            var reg_form = new FormData(reg_form_ser);
-            var pet_form = new FormData(pet_form_ser);
-            
-          /*
-            reg_form.append('username',form.get('usernmame'));
-            reg_form.append('password1',form.get('password1'));
-            reg_form.append('password2',form.get('password2'));
-            reg_form.append('email',form.get('email'));
-
-            pet_form.append('pet_name',form.get('pet_name'));
-            pet_form.append('age',form.get('age'));
-            pet_form.append('gender',form.get('gender'));
-            */
-
-
-            $.ajax({
-                url: "{% url 'register' %}",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    "reg_form" : reg_form,
-                    "pet_form" : pet_form,
-                    "headers" : {"X-CSRFToken": '{{ csrf_token }}'}
-                    },
-                success : function(json) {
-                    alert("Successfully sent the URL to Django");
-                },
-                error : function(xhr,errmsg,err) {
-                    alert("Could not send URL to Django. Error: " + xhr.status + ": " + xhr.responseText);
+            submitForms = function(){
+                    alert('ok'); //only for testing
+                    document.forms["reg_form"].submit();
+                    document.forms["pet_form"].submit();
+                    alert(document.forms['reg_form']);
                 }
-            });
-        });
+                        
 
-    </script>
+            openPetPopup.addEventListener('click', () => {
+                PetPopup.style.display = "block";
+            })
+
+            
+            backPetPopup.addEventListener('click', () => {
+                PetPopup.style.display = "none";
+            })
+
+            
+            /*closePetPopup.addEventListener('click', (e) => {
+                PetPopup.style.display = "none";
+                
+        
+                
+                /*e.preventDefault();
+                //let ok  = 1;
+
+            // let my_form = document.getElementById('myForm');
+
+             
+                var reg_form = new FormData();
+                var pet_form = new FormData();
+            
+                reg_form.append('username',$('usernmame').val());
+                reg_form.append('password1',$('password1').val());
+                reg_form.append('password2',$('password2').val());
+                reg_form.append('email',$('email').val());
+
+                pet_form.append('pet_name',$('pet_name').val());
+                pet_form.append('age',$('age').val());
+                pet_form.append('gender',$('gender').val());
+
+                let cookie = document.cookie
+                let csrfToken = cookie.substring(cookie.indexOf('=') + 1)
+                var csrftoken = $("[name=csrfmiddlewaretoken]").val()
+                
+
+
+                $.ajax({
+                    url: "{% url 'register' %}",
+                    type: "POST",
+                    cache: false,
+                    processData: false,
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json' ,
+                    data: {
+                        "reg_form" : reg_form,
+                        "pet_form" : pet_form,
+                        //"headers" : {"X-CSRFToken": '{{ csrf_token }}'}
+                        },
+
+                     headers:{
+                            "X-CSRFToken": csrftoken
+                        },
+
+                    success : function(json) {
+                        alert("Successfully sent the URL to Django");
+                    },
+                    error : function(xhr,errmsg,err) {
+                        alert("Could not send URL to Django. Error: " + xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            });
+
+            */
+       // })
+    
+        </script>
+
+    {% endblock javascript %}
 
 
 </div>
 
 
 
-{% endblock content %}
 
 
