@@ -3,10 +3,22 @@ from django.views.generic import ListView, DetailView
 
 #from Pawsome.Forum.models import Post
 from .models import Post
+from django.views.generic import ListView, DetailView, CreateView
+from .forms import PostForm 
 
 
-def show_forum(request):
-    model = Post
-   # template_name = 'Forumpage.html'
+#den exei request giati einai class based view
+#to list view vazei ola ta post stin selida
+#detail view gia epipleon plhrofories se ena post
+class ForumView(ListView):
+    model=Post
+    template_name = 'Forumpage.html'
     
-  #να βαλω ενα queue για να τα παρω απο τη βαση 
+
+class AddPostView(CreateView):
+    model= Post
+    form_class = PostForm
+    template_name ='AddPost.html'
+    #fields = ('author', 'post_time', 'post_text')
+ 
+ 
