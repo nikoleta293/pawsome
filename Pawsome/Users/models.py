@@ -5,6 +5,8 @@ from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from Calendar.models import Appointment,Events
+from Forum.models import Post
+from Pet.models import Pet
 
 from . managers import CustomUserManager
 
@@ -26,6 +28,8 @@ class Users (AbstractBaseUser):
     profile_image =models.ImageField(max_length=255,upload_to="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images",null=True,blank=True,default="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images\logo_transparent.png")
     confirm_password = models.CharField(max_length=200)
     events = models.ManyToManyField(Events)
+    author = models.ForeignKey(Post, on_delete=models.CASCADE,null=True)
+
 
     exclude = ('is_admin','is_active','is_staff','is_superuser')
 
@@ -56,9 +60,8 @@ class Users (AbstractBaseUser):
 
 
 class PetOwner (Users):
-    pet_name = models.CharField(max_length=50)
-    owner_email = models.OneToOneField('Users', on_delete=models.CASCADE,related_name='own_email')
-    #appointmentList
+    pet_name = models.ForeignKey(Pet,on_delete=models.CASCADE)
+    appointment = models.ForeignKey(Appointment,on_delete=models.CASCADE,null=True)
     
 class Professional (Users):
     AFM = models.CharField(max_length=50)
@@ -81,7 +84,6 @@ class Organizations(Users):
     address = models.CharField(max_length=50)
     hours = models.TimeField(auto_now=False, auto_now_add=False)
     telephone = models.CharField(max_length=12)
-    org_email = models.OneToOneField('Users', on_delete=models.CASCADE,related_name='organization_email')
 
    
 
