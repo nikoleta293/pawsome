@@ -7,9 +7,10 @@ class PostForm (forms.ModelForm):
         model=Post 
         fields = ['post_text']
         
-        widgets = {
-            'post_text': TextInput(attrs={'class': 'post_form','id' : 'email'})
+        #widgets = {
+         
+        #   'post_text': TextInput(attrs={'class': 'post_form','id' : 'post_text'})
             
-        }     
+        #}     
        
-      
+    #def clean ()  

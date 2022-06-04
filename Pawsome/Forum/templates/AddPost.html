@@ -1,18 +1,15 @@
-{% extends 'Forumpage.html'%}
 
+{% block content %}
 
-{% block content%}
-
-<h1>Add your post</h1>
+<h4>Add your post</h4>
 <div class= "form-group">
     <form method="POST"
         {% csrf_token %}
-        {{ form.as_p}}
-        <button>Post</button>
+        {{ form.as_p }}
+        <input class="btn btn-primary cfg" type="submit" value="Add Post">
 
     </form>
 
 </div>
 
-
-    {% endblock%}
+{% endblock %}

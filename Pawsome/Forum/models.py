@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class Post (models.Model): 
     post_time = models.DateTimeField(auto_now_add=True)
-    post_text = models.CharField(max_length=200)
+    post_text = models.TextField(max_length=200)
     
     def __str__(self):
         return self.post_text + ' | ' + self.author + ' | ' +self.post_time

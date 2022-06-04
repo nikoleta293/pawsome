@@ -17,8 +17,7 @@ class ForumView(ListView):
 
 class AddPostView(CreateView):
     model= Post
-    form_class = PostForm
+    #form_class = PostForm
     template_name ='AddPost.html'
-    #fields = ('author', 'post_time', 'post_text')
- 
+    fields = ['post_text']
  
