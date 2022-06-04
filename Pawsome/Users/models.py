@@ -7,6 +7,8 @@ from django.contrib.auth.models import AbstractBaseUser
 from Calendar.models import Appointment,Events
 from Forum.models import Post
 from Pet.models import Pet
+import datetime
+from uuid import uuid4
 
 from . managers import CustomUserManager
 
@@ -19,8 +21,9 @@ def get_default_profile_image():
 
 class Users (AbstractBaseUser): 
     username = models.CharField(max_length=50)
+    id = models.AutoField(primary_key=True,editable=False)
     password = models.CharField(max_length=200)
-    email = models.EmailField(primary_key=True,unique=True,verbose_name='email')
+    email = models.EmailField(unique=True,verbose_name='email')
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True )
     is_staff = models.BooleanField(default=False)
@@ -58,6 +61,9 @@ class Users (AbstractBaseUser):
     def get_profile_image_filename(self):
         return str(self.profile_image)[str(self.profile_image).index(f'profile_image/{self.pk}/'):]
 
+    def create_id():
+        now = datetime.datetime.now()
+        return str(now.year)+str(now.month)+str(now.day)+str(uuid4())[:7]
 
 class PetOwner (Users):
     pet_name = models.ForeignKey(Pet,on_delete=models.CASCADE)

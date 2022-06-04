@@ -13,12 +13,17 @@ from .forms import PostForm
 class ForumView(ListView):
     model=Post
     template_name = 'Forumpage.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
     
 
 class AddPostView(CreateView):
     model= Post
     form_class = PostForm
-    template_name ='AddPost.html'
+    
     #fields = ('author', 'post_time', 'post_text')
  
  
