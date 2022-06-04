@@ -69,7 +69,6 @@ class Professional (Users):
     address = models.CharField(max_length=50)
     hours = models.TimeField(auto_now=False, auto_now_add=False)
     telephone = models.CharField(max_length=12)
-    prof_email = models.OneToOneField('Users', on_delete=models.CASCADE,related_name='pro_email')
     appointment =  models.ManyToManyField(Appointment)
     #appointmentList
     certificate= models.FileField()
