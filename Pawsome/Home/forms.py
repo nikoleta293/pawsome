@@ -61,14 +61,22 @@ class RegistrationForm(UserCreationForm):
         for field in self._meta.get_fields():
             field_values.append(getattr(self, field, ''))
         return ' '.join(field_values)
+
+   
+    def clean_email(self):
+       email  = self.cleaned_data.get('email')
+       if Users.objects.filter(email=email).exists():
+            raise forms.ValidationError("Email is not unique")
+       return email
     
 
 class PetForm(ModelForm):
 
      class Meta:
         model = Pet
-        fields = ['pet_name','age','gender']
+        fields = ['pet_name','age','gender','img']
 
+    
 
 
 class LoginForm(ModelForm):

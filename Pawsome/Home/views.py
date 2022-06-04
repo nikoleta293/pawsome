@@ -1,6 +1,7 @@
 import json
 import re
 from sys import prefix
+from turtle import pen
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from . forms import RegistrationForm, PetForm, LoginForm
@@ -8,6 +9,7 @@ from Users.models import Users
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.core.serializers import serialize
+from Pet.models  import Pet
 
 
 # Create your views here.
@@ -24,45 +26,56 @@ def registerPage(request):
     if request.method == 'POST':
 
         reg_form = RegistrationForm(request.POST)
-        pet_form = PetForm(request.POST)
+        pet_form = PetForm(request.POST,request.FILES)
 
         if reg_form.is_valid() and pet_form.is_valid():
          
-            reg_form = json.dumps(reg_form.cleaned_data)
-            pet_form = json.dumps(pet_form.cleaned_data)
-            
-            request.session['reg_form'] = reg_form
-            request.session['pet_form'] = pet_form
+            reg_form.clean_password()
+            reg=reg_form.save()
+            pet=pet_form.save()
 
-            return redirect('final-register')
+
+            return redirect('registration-final' + str(reg.id) + '/' +  str(pet.id) + '/')
+
+        else:
+            print(reg_form.errors)
+            print(pet_form.errors)
+            context = {'reg_form' : reg_form , 'pet_form' : pet_form}
+            return render(request,'registerPage.html',context)
 
             
-        
     
 
     return render(request,'registerPage.html',context)
 
 
-def registerAll(request):
+def registerAll(request,pk,pk2):
 
-    reg_form = RegistrationForm(json.loads(request.session['reg_form']))
-    pet_form = PetForm(json.loads(request.session['pet_form']))
-
-    """ reg_form = request.session['reg_form']
-    pet_form = request.session['pet_form'] """
-
-    context = {'reg_form' : reg_form , 'pet_form' : pet_form}
-
-
+    reg_form = RegistrationForm()
+    pet_form = PetForm()
+   
+   
     if request.method == 'POST':
+
+        reg_form = RegistrationForm(request.POST)
+        pet_form = PetForm(request.POST,request.FILES)
         
         if reg_form.is_valid() and pet_form.is_valid():
             reg_form.clean_password()
             reg_form.save()
             pet_form.save()
             redirect('login')
+
+    elif request.method == 'GET':
+        user = Users.objects.get(id=pk)
+        pet = Pet.objects.get(id=pk2)
+        reg_form = RegistrationForm(instance=user)
+        pet_form = PetForm(instance=pet)
+        context = { 'reg_form' : reg_form, 'pet_form' : pet_form,'user' : user , 'pet' : pet}
+
+        return render(request,'final_register.html',context)
     
-    return render(request,'final_register.html',context)
+    return redirect('login')
 
 
 
