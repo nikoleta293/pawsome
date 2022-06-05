@@ -1,29 +1,24 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-
-from Forum.models import Post
+from django.views.generic.list import BaseListView
+from django.views.generic.edit import BaseCreateView
+from django.views.generic.base import TemplateResponseMixin
 from .models import Post
-from django.views.generic import ListView, DetailView, CreateView
-from .forms import PostForm 
 
 
-#den exei request giati einai class based view
-#to list view vazei ola ta post stin selida
-#detail view gia epipleon plhrofories se ena post
-class ForumView(ListView):
-    model=Post
+class FormAndListView(BaseCreateView, BaseListView, TemplateResponseMixin):
+    
+    model = Post
+
+    fields = ['post_text']
+
     template_name = 'Forumpage.html'
 
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
     
-
-class AddPostView(CreateView):
-    model= Post
-    form_class = PostForm
-    
-    #fields = ('author', 'post_time', 'post_text')
+    def get(self, request, *args, **kwargs):
+        formView = BaseCreateView.get(self, request, *args, **kwargs)
+        listView = BaseListView.get(self, request, *args, **kwargs)
+        formData = formView.context_data['form']
+        listData = listView.context_data['object_list']
+        return render(request,'ForumPage.html', {'form' : formData, 'all_posts' : listData})
  
  

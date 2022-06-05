@@ -4,6 +4,8 @@ from sys import prefix
 from turtle import pen
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+
+from pawsome.Pawsome.Users.models import PetOwner, Professional
 from . forms import RegistrationForm, PetForm, LoginForm
 from Users.models import Users
 from django.contrib import messages
@@ -33,10 +35,11 @@ def registerPage(request):
             reg_form.clean_password()
             reg=reg_form.save()
             pet=pet_form.save()
-
-
+            PetOwner.objects.create()
             return redirect('registration-final' + str(reg.id) + '/' +  str(pet.id) + '/')
+                
 
+           
         else:
             print(reg_form.errors)
             print(pet_form.errors)

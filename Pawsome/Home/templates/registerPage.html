@@ -125,7 +125,26 @@
                         
 
             openPetPopup.addEventListener('click', () => {
-                PetPopup.style.display = "block";
+
+                var role = $("#role").val();
+
+                alert(role);
+
+                if( role == 'pros' )
+                {
+                    window.location.href = "{% url 'verification' %}"
+                }
+                else if(role == 'org')
+                {
+                    window.location.href = "{% url 'org-verify' %}"
+                }
+
+                else
+                {
+                    PetPopup.style.display = "block";
+                }
+
+                
             })
 
             

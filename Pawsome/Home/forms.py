@@ -10,16 +10,17 @@ class RegistrationForm(UserCreationForm):
    
     class Meta:
         model = Users
-        fields = {"email","username","password1","password2"}
+        fields = {"email","username","password1","password2","role"}
         widgets = {
             'email': TextInput(attrs={'class': 'my_form','id' : 'email'}),
             'username': TextInput(attrs={'class': "my_form",'id' : 'username'}),
             'password1': TextInput(attrs={'class': 'my_form','id' : 'password1'}),
-            'password2': TextInput(attrs={'class': 'my_form', 'id' : 'password2'})
+            'password2': TextInput(attrs={'class': 'my_form', 'id' : 'password2'}),
+            'role' : forms.Select(attrs = { 'class' : 'myform','id' : 'role'})
             }
     
     
-    field_order = ['username', 'email', 'password1','password2']
+    field_order = ['username', 'email','role','password1','password2']
 
     
     def clean_password(self):

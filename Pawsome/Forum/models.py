@@ -3,15 +3,16 @@ from sqlite3 import Timestamp
 from tkinter import CASCADE
 from django.db import models
 from django.urls import reverse
+from Users.models import Users
 
-class Post (models.Model): 
+class Post (models.Model):
+    author = models.ForeignKey(Users,on_delete=models.CASCADE,default=None) 
     post_time = models.DateTimeField(auto_now_add=True)
     post_text = models.CharField(max_length=200)
     
     def __str__(self):
-        return self.post_text + ' | ' + self.author + ' | ' +self.post_time
+        return self.post_text
     
-    #methodos poy se epistrefei sto forum
     def get_absolute_url(self):
-        return reverse('forum', args=(str(self.id))) #id=primarykey
+        return reverse('forum') 
     
