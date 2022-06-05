@@ -4,11 +4,11 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 from .models import *
 from .models import Events
-from django.http import HttpResponse
+#from django.http import HttpResponse
 from .utils import Calendar
 
 def index(request):
-    return HttpResponse('Hello')
+    return render(request,'calendar_base.html')
 
 class CalendarView(generic.ListView):
     model = Events

@@ -1,4 +1,4 @@
-{'% load static %}
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -9,7 +9,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
-  <link rel="stylesheet" type="text/css" href="{'% static 'Calendar/css/cal.css' %}">
+  <!-- <link rel="stylesheet" type="text/css" href="{'%'cal.css'%}"> -->
  
   <style> body {margin: 0; background: #181824; font-family: Arial; }
     nav {
@@ -84,8 +84,28 @@
     </style>
 </head>
 <body>
-  {'% block content %}
-  {'% endblock %}
+  
+
+  <nav class="vertical-menu-wrapper">
+    <div class="vertical-menu-logo">
+        <div>
+          <img src="../../Images/favicon.png" alt="Pawsome Logo">
+        </div>
+        <span class="open-menu-btn"><hr><hr><hr></span>
+    </div>
+    <ul class="vertical-menu">
+        <li>Search</li>
+        <li>Forum</li>
+        <hr />
+        <li>Settings</li>
+        <li>User info</li>
+        <li>Pet info</li>
+    </ul>
+</nav>
+<div class="content-wrapper">
+  <div class="content">
+    {% block content %}
+  {% endblock %}
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -96,31 +116,18 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 
-  {'% block script %}
-  {'% endblock %}
-
-  <nav class="vertical-menu-wrapper">
-    <div class="vertical-menu-logo">
-        <div>LOGO</div>
-        <span class="open-menu-btn"><hr><hr><hr></span>
-    </div>
-    <ul class="vertical-menu">
-        <li>Schedule</li>
-        <li>Event</li>
-        <hr />
-        <li>Setting</li>
-        <li>Privacy</li>
-        <li id="user-info">MJ<span>online</span></li>
-    </ul>
-</nav>
+  {% block script %}
+  {% endblock %}
+  </div>
+</div>
 {% block javascript %}
-<sriptr>
+<script>
   $('.open-menu-btn').on('click', function(){
     if($('body').hasClass('closed-menu')){
       $('body').removeClass('closed-menu');
     }else  $('body').addClass('closed-menu');
   });
-</sriptr>
+</script>
 {% endblock javascript %}
 </body>
 </html>
