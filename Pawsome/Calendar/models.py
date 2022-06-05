@@ -4,7 +4,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
   
 
-class EventAbstract(models.Model):
+""" class EventAbstract(models.Model):
     #Event abstract model
 
     is_active = models.BooleanField(default=True)
@@ -22,11 +22,16 @@ class Events(EventAbstract):
     notification = models.BooleanField(default=False)
     repeat = models.BooleanField(default=False)
     start_time = models.DateTimeField()
+    end_time = models.DateTimeField() """
+
+class Events(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    start_time = models.DateTimeField()
     end_time = models.DateTimeField()
 
-
     #checks for overlap
-    def check_event(self, fixed_start, fixed_end, new_start, new_end):
+"""     def check_event(self, fixed_start, fixed_end, new_start, new_end):
         overlap = False
         if new_start == fixed_end or new_end == fixed_start:    #edge case
             overlap = False
@@ -49,6 +54,6 @@ class Events(EventAbstract):
                     raise ValidationError(
                         'There is an overlap with another event: ' + str(event.day) + ', ' + str(
                             event.start_time) + '-' + str(event.end_time))
-
+ """
 class Appointment(Events):
     isDone=models.BooleanField

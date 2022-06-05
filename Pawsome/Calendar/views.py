@@ -8,11 +8,11 @@ from django.http import HttpResponse
 from .utils import Calendar
 
 def index(request):
-    return HttpResponse('hello')
+    return HttpResponse('Hello')
 
 class CalendarView(generic.ListView):
     model = Events
-    template_name = 'cal/calendar.html'
+    template_name = 'Calendar/calendar_base.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
