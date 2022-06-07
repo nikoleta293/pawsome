@@ -12,6 +12,40 @@
 
 }
 
+
+#SpecialPopup
+{
+	display: none;
+	width: 250px;
+	position: fixed;
+	left: 8vw;
+	border: 3px solid #f1f1f1;
+	bottom: 40vh;
+	z-index: 9;
+
+}
+
+
+#SpecialPopup label
+{
+	white-space: nowrap;
+
+
+}
+
+#SpecialPopup label input
+{
+
+	position: relative;
+	left : 15vw;
+	top : 2vh
+
+}
+
+
+
+
+
 #Pet-Popup {
 	display: none;
 	border-color: grey;

@@ -4,6 +4,7 @@ from Users.models import PetOwner
 
 class Pet (models.Model):
     pet_owner = models.ForeignKey(PetOwner,on_delete=models.CASCADE)
+    pet_name = models.CharField(max_length=50)
     age = models.CharField(max_length=4)
     gender = models.CharField(max_length=6)
     kind = models.CharField(max_length=100)

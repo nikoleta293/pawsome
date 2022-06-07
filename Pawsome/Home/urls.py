@@ -13,6 +13,6 @@ urlpatterns=[
     path('forum/',include('Forum.urls')),
     path('',views.home,name='home'),
     path("logout/", LogoutView.as_view(template_name="logout.html"), name="logout"),
-    path("verification/",views.verification,name="verification"),
+    path("registration/verification<str:pk3>/<str:pk4>/",views.verification,name="verification"),
     path("org-verify/",views.org_verify,name="org-verify")
-]
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

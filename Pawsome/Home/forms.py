@@ -1,8 +1,10 @@
+from dataclasses import field
 from django.forms import ModelForm,TextInput
-from Users.models import Users
 from Pet.models import Pet
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.utils.safestring import mark_safe
+from Users.models import Professional,Users
 
 class RegistrationForm(UserCreationForm):
 
@@ -92,3 +94,40 @@ class LoginForm(ModelForm):
 
     
      field_order = ['email', 'password']
+
+class VerificationForm(ModelForm):
+
+    class Meta:
+        model = Professional
+        exclude = ('appointment',
+        'is_admin','is_active','is_staff',
+        'is_superuser','events','role',
+        'last_login',
+        )
+
+
+
+
+special =(
+        ('Vet','Vet'),
+        ('pet-trainer','Pet Trainer'),
+        ('pet-sitter', 'Pet sitter')
+    )
+
+
+
+
+
+
+
+class SpecialityForm(ModelForm):
+
+    speciality = forms.ChoiceField(
+        choices=special,
+        widget=forms.RadioSelect())
+
+    class Meta:
+        model = Professional
+        fields = ['speciality']
+        
+        

@@ -5,7 +5,6 @@ from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from Calendar.models import Appointment,Events
-from Pet.models import Pet
 import datetime
 from uuid import uuid4
 
@@ -27,7 +26,7 @@ class Users (AbstractBaseUser):
     is_active = models.BooleanField(default=True )
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    profile_image =models.ImageField(max_length=255,upload_to="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images",null=True,blank=True,default="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images\logo_transparent.png")
+    profile_image =models.ImageField(max_length=255,upload_to="logo_transparent.png")
     confirm_password = models.CharField(max_length=200)
     events = models.ManyToManyField(Events)
    
@@ -71,19 +70,19 @@ class Professional (Users):
     AFM = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
-    hours = models.TimeField(auto_now=False, auto_now_add=False)
+    hours = models.TimeField(default='00:00')
     telephone = models.CharField(max_length=12)
-    prof_email = models.OneToOneField('Users', on_delete=models.CASCADE,related_name='pro_email')
     appointment =  models.ManyToManyField(Appointment)
     #appointmentList
     certificate= models.FileField()
     CV = models.FileField()
 
-    Roles =(
-    ('Vet','Vet'),
-    ('pet-trainer','Pet Trainer')
+    special =(
+        ('Vet','Vet'),
+        ('pet-trainer','Pet Trainer'),
+        ('pet-sitter', 'Pet sitter')
     )
-    role = models.CharField(max_length=50, choices=Roles)
+    speciality = models.CharField(max_length=50, choices=special)
 
 
     license = models.FileField()

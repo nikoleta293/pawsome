@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+
+
+
+{% block content %}
+
+
+{% load static %}
+
+<link rel="stylesheet"  href="{% static 'final_reg_pro.css' %}">
+
+  <form method="POST" action="{% url 'verification' id speciality  %}" id="all_reg_form">
+
+    {% csrf_token %}
+
+
+
+    <class="all-together">
+
+        {% for field in verify_form%}
+
+        <div class="all-fields-reg">
+                <p>
+
+                    <label class="tags" for="{{field.id_for_label}}">{{field.label_tag}}</label>
+                    {{field}}
+                    
+                    {% if field.help_text %}
+                        <div class="help-fields">
+                            <small id="help-text" style="color:grey;">{{field.help_text}}</small>
+                        </div>
+                    {% endif  %}
+
+
+                    
+                    {% if verify_form.errors %}
+                    
+                        {% for error in field.errors %}
+
+                            <p style="color: red;">{{error}}</p>
+                        
+                        
+                        {% endfor %}
+
+                    {% endif %}
+                   
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+
+{% endblock content %}

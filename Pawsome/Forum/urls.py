@@ -1,8 +1,8 @@
-from django.urls import path
-from . import views 
-from .views import ForumView, AddPostView
-from .views import AddPostView
+from django.urls import path 
+from .views import FormAndListView
+
+
 urlpatterns = [
     
-     path('',ForumView.as_view(), name='forum'),
+     path('',FormAndListView.as_view(), name='forum'),
 ] 

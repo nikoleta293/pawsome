@@ -1,3 +1,4 @@
+from distutils.command.sdist import sdist
 import json
 import re
 from sys import prefix
@@ -5,8 +6,8 @@ from turtle import pen
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
-from pawsome.Pawsome.Users.models import PetOwner, Professional
-from . forms import RegistrationForm, PetForm, LoginForm
+from Users.models import PetOwner,Professional
+from . forms import RegistrationForm, PetForm, LoginForm,SpecialityForm, VerificationForm
 from Users.models import Users
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -22,16 +23,26 @@ def is_ajax(request):
 def registerPage(request):
     reg_form = RegistrationForm()
     pet_form = PetForm()
+    special_form = SpecialityForm()
    
-    context = {'reg_form' : reg_form , 'pet_form' : pet_form}
+    context = {'reg_form' : reg_form , 'pet_form' : pet_form,'special_form' : special_form}
 
     if request.method == 'POST':
 
         reg_form = RegistrationForm(request.POST)
         pet_form = PetForm(request.POST,request.FILES)
+        special_form = SpecialityForm(request.POST)
 
-        if reg_form.is_valid() and pet_form.is_valid():
-         
+        if reg_form.is_valid() and special_form.is_valid():
+            
+            reg_form.clean_password()
+            reg=reg_form.save()
+            special = special_form.cleaned_data['speciality']
+            print(special)
+            return redirect('verification' + str(reg.id) + '/' + str(special) + '/')
+
+        elif reg_form.is_valid() and pet_form.is_valid():
+            
             reg_form.clean_password()
             reg=reg_form.save()
             pet=pet_form.save()
@@ -106,3 +117,30 @@ def loginPage(request):
 def home(request):
 
     return render(request,'homePage.html')
+
+def verification(request,pk3,pk4):
+    verify_form = VerificationForm()
+
+
+    if request.method == 'GET':
+        print('hwloo')
+        user = Users.objects.get(id=pk3)
+        speciality = pk4
+        verify_form = VerificationForm(instance=user)
+        verify_form.fields['speciality'].initial = speciality
+        verify_form.fields['speciality'].widget.attrs['readonly'] = True
+        
+        verify_form.fields
+
+
+        context = { 'verify_form' : verify_form , 'id' : pk3, 'speciality' : pk4}
+
+        return render(request,'certification.html',context)
+    
+
+    return render(request,'certification.html')
+
+
+
+def org_verify(requst):
+    pass

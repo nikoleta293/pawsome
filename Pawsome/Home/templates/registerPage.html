@@ -52,6 +52,47 @@
 
 
 
+        
+            <div id ="SpecialPopup">
+            
+                <h4> Speciality </h4>
+
+                {% for field in special_form %}
+
+
+                    <p>
+
+                        {{field}}
+
+                        {% if field.help_text %}
+                            <div class="help-fields">
+                                <small id="help-text" style="color:grey;">{{field.help_text}}</small>
+                            </div>
+                        {% endif  %}
+
+
+                    
+                        {% if special_form.errors %}
+                            
+
+        
+                            {% for error in field.errors %}
+
+                                <p style="color: red;">{{error}}</p>
+                            
+                            
+                            {% endfor %}
+                        {% endif %}
+
+                    </p>
+               
+                
+                {% endfor %}
+
+            </div>
+
+
+
 
             <div id="Pet-Popup">
 
@@ -116,6 +157,35 @@
             //var closePetPopup= document.getElementById("Close-Pet-Popup")
             var backPetPopup = document.getElementById("Back-Pet-Popup")
 
+            var role = document.getElementById("role");
+
+            var specialityPop = document.getElementById("SpecialPopup");
+
+
+            var form = document.forms;
+
+           
+            
+            role.addEventListener('change', function() {
+
+                    if(role.value == "pros")
+                    {
+                    
+                        specialityPop.style.display = "block";
+
+                    }
+
+                    else
+                    {
+                    
+                        specialityPop.style.display = "none";
+
+                    }
+
+            });
+    
+
+
             submitForms = function(){
                     alert('ok'); //only for testing
                     document.forms["reg_form"].submit();
@@ -124,19 +194,20 @@
                 }
                         
 
-            openPetPopup.addEventListener('click', () => {
+            openPetPopup.addEventListener('click', (e) => {
 
-                var role = $("#role").val();
-
-                alert(role);
-
+                let role = document.getElementById("role").value;
+        
                 if( role == 'pros' )
                 {
-                    window.location.href = "{% url 'verification' %}"
+                    alert(form);
+                    e.preventDefault();
+                    form[0].submit();
                 }
                 else if(role == 'org')
                 {
-                    window.location.href = "{% url 'org-verify' %}"
+                    e.preventDefault();
+                    form[0].submit();
                 }
 
                 else
