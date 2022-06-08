@@ -1,5 +1,6 @@
 from contextlib import nullcontext
 from distutils.command import upload
+from email.policy import default
 from re import T
 from unittest.util import _MAX_LENGTH
 from django.db import models
@@ -20,14 +21,12 @@ def get_default_profile_image():
 class Users (AbstractBaseUser): 
     username = models.CharField(max_length=50)
     id = models.AutoField(primary_key=True,editable=False)
-    password = models.CharField(max_length=200)
     email = models.EmailField(unique=True,verbose_name='email')
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True )
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    profile_image =models.ImageField(max_length=255,upload_to="logo_transparent.png")
-    confirm_password = models.CharField(max_length=200)
+    profile_image =models.ImageField(max_length=255,upload_to="logo_transparent.png",default='Logo-small.png')
     events = models.ManyToManyField(Events)
    
 
@@ -68,7 +67,6 @@ class PetOwner (Users):
     
 class Professional (Users):
     AFM = models.CharField(max_length=50)
-    name = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     hours = models.TimeField(default='00:00')
     telephone = models.CharField(max_length=12)

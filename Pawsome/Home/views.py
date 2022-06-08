@@ -15,6 +15,11 @@ from django.core.serializers import serialize
 from Pet.models  import Pet
 
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 # Create your views here.
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -38,7 +43,7 @@ def registerPage(request):
             reg_form.clean_password()
             reg=reg_form.save()
             special = special_form.cleaned_data['speciality']
-            print(special)
+            logger.warning('Platform is running at risk')
             return redirect('verification' + str(reg.id) + '/' + str(special) + '/')
 
         elif reg_form.is_valid() and pet_form.is_valid():
@@ -125,17 +130,25 @@ def verification(request,pk3,pk4):
     if request.method == 'GET':
         print('hwloo')
         user = Users.objects.get(id=pk3)
+        user.password1 = ''
         speciality = pk4
         verify_form = VerificationForm(instance=user)
         verify_form.fields['speciality'].initial = speciality
         verify_form.fields['speciality'].widget.attrs['readonly'] = True
         
-        verify_form.fields
-
 
         context = { 'verify_form' : verify_form , 'id' : pk3, 'speciality' : pk4}
 
         return render(request,'certification.html',context)
+
+    else:
+        verify_form = VerificationForm(request.POST)
+
+        if verify_form.is_valid():
+            verify_form.save()
+            return redirect('login')
+
+
     
 
     return render(request,'certification.html')

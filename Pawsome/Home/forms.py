@@ -102,8 +102,13 @@ class VerificationForm(ModelForm):
         exclude = ('appointment',
         'is_admin','is_active','is_staff',
         'is_superuser','events','role',
-        'last_login',
+        'last_login','password'
         )
+
+        
+
+    field_order = ['username', 'email','profile_image','AFM',
+    'address','telephone','hours','certificate','CV']
 
 
 

@@ -10,18 +10,17 @@
 
 <link rel="stylesheet"  href="{% static 'final_reg_pro.css' %}">
 
-  <form method="POST" action="{% url 'verification' id speciality  %}" id="all_reg_form">
+  <form method="POST" action="{% url 'verification' id speciality  %}" id="pro_form">
 
     {% csrf_token %}
 
-
-
-    <class="all-together">
+    <div class="all-together-pro">
 
         {% for field in verify_form%}
 
-        <div class="all-fields-reg">
+        <div class="all-fields-pro">
                 <p>
+
 
                     <label class="tags" for="{{field.id_for_label}}">{{field.label_tag}}</label>
                     {{field}}
@@ -51,5 +50,75 @@
 
         {% endfor %}
 
+        
+        <div class="Cert-Popup">
+
+            <table>
+              <tr>
+                <th>Attention!!!</th>
+              </tr>
+                <tr>
+                <td>
+                    The attestation of your data are in progress.
+                    Please wait... <span class="loader"></span>
+
+                    <button class="ok"> Ok </button>
+
+                </td>
+               
+          </table>
+
+
+        </div>
+
+        <div class="buttons">
+             <input id="Open-Cert-Popup" class="btn btn-primary cfg" type="submit" value="Next">
+             <a id="back" href="{% url 'login' %}">Back</a>
+        </div>
 
 {% endblock content %}
+
+
+
+{% block javascript %}
+    
+        <script type="text/javascript" window.CSRF_TOKEN = "{{ csrf_token }}";>
+
+            var CertPopup = document.getElementById("Cert-Popup");
+
+            var openCertPopup = document.getElementById("Open-Cert-Popup")
+            var closeCertPopup = document.getElementByClassName("ok")
+
+            var loader = document.getElementsByClassName("loader")
+
+            closeCertPopup.addEventListener('click', () => {
+                CertPopup.style.display = "none";
+            })
+
+            openCertPopup.addEventListener('click',()=>{
+
+                CertPopup.style.display = "block";
+
+                setTimeout(hide,5000);
+
+            })
+
+
+            hide = function()
+            {
+
+                loader.style.display = "none";
+                
+            }
+
+
+
+
+
+
+
+
+        </script>
+
+
+{% endblock javascript %}
