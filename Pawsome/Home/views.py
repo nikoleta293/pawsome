@@ -54,12 +54,12 @@ def registerPage(request):
             PetOwner.objects.create()
             return redirect('registration-final' + str(reg.id) + '/' +  str(pet.id) + '/')
                 
-
+        
            
         else:
-            print(reg_form.errors)
-            print(pet_form.errors)
-            context = {'reg_form' : reg_form , 'pet_form' : pet_form}
+            pet_form = PetForm()
+            special_form = SpecialityForm()
+            context = {'reg_form' : reg_form , 'pet_form' : pet_form,'special_form' : special_form}
             return render(request,'registerPage.html',context)
 
             
@@ -128,7 +128,7 @@ def verification(request,pk3,pk4):
 
 
     if request.method == 'GET':
-        print('hwloo')
+        print('hwloo',pk3,pk4)
         user = Users.objects.get(id=pk3)
         user.password1 = ''
         speciality = pk4
