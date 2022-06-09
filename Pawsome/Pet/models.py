@@ -1,4 +1,5 @@
 from django.db import models
+from Users.models import PetOwner
 
 # Create your models here.
 

@@ -1,8 +1,10 @@
+from dataclasses import field
 from django.forms import ModelForm,TextInput
-from Users.models import Users
 from Pet.models import Pet
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.utils.safestring import mark_safe
+from Users.models import Professional,Users
 
 class RegistrationForm(UserCreationForm):
 
@@ -15,11 +17,12 @@ class RegistrationForm(UserCreationForm):
             'email': TextInput(attrs={'class': 'my_form','id' : 'email'}),
             'username': TextInput(attrs={'class': "my_form",'id' : 'username'}),
             'password1': TextInput(attrs={'class': 'my_form','id' : 'password1'}),
-            'password2': TextInput(attrs={'class': 'my_form', 'id' : 'password2'})
+            'password2': TextInput(attrs={'class': 'my_form', 'id' : 'password2'}),
+            'role' : forms.Select(attrs = { 'class' : 'myform','id' : 'role'})
             }
     
     
-    field_order = ['username', 'email', 'password1','password2']
+    field_order = ['username', 'email','role','password1','password2']
 
     
     def clean_password(self):
@@ -91,3 +94,45 @@ class LoginForm(ModelForm):
 
     
      field_order = ['email', 'password']
+
+class VerificationForm(ModelForm):
+
+    class Meta:
+        model = Professional
+        exclude = ('appointment',
+        'is_admin','is_active','is_staff',
+        'is_superuser','events','role',
+        'last_login','password'
+        )
+
+        
+
+    field_order = ['username', 'email','profile_image','AFM',
+    'address','telephone','hours','certificate','CV']
+
+
+
+
+special =(
+        ('Vet','Vet'),
+        ('pet-trainer','Pet Trainer'),
+        ('pet-sitter', 'Pet sitter')
+    )
+
+
+
+
+
+
+
+class SpecialityForm(ModelForm):
+
+    speciality = forms.ChoiceField(
+        choices=special,
+        widget=forms.RadioSelect())
+
+    class Meta:
+        model = Professional
+        fields = ['speciality']
+        
+        

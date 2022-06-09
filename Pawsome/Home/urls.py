@@ -1,5 +1,6 @@
 from unicodedata import name
 from django.urls import path, include
+from django.views import View
 from . import views
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
@@ -11,5 +12,7 @@ urlpatterns=[
     path('registration/registration-final<str:pk>/<str:pk2>/',views.registerAll,name="final-register"),
     path('forum/',include('Forum.urls')),
     path('',views.home,name='home'),
-    path("logout/", LogoutView.as_view(template_name="logout.html"), name="logout")
-]
+    path("logout/", LogoutView.as_view(template_name="logout.html"), name="logout"),
+    path("registration/verification<str:pk3>/<str:pk4>/",views.verification,name="verification"),
+    path("org-verify/",views.org_verify,name="org-verify")
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
