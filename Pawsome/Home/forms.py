@@ -10,7 +10,7 @@ class RegistrationForm(UserCreationForm):
    
     class Meta:
         model = Users
-        fields = {"email","username","password1","password2"}
+        fields = {"email","username","password1","password2","role"}
         widgets = {
             'email': TextInput(attrs={'class': 'my_form','id' : 'email'}),
             'username': TextInput(attrs={'class': "my_form",'id' : 'username'}),

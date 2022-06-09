@@ -5,8 +5,6 @@ from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from Calendar.models import Appointment,Events
-from Forum.models import Post
-from Pet.models import Pet
 import datetime
 from uuid import uuid4
 
@@ -31,7 +29,6 @@ class Users (AbstractBaseUser):
     profile_image =models.ImageField(max_length=255,upload_to="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images",null=True,blank=True,default="D:\1Mentor\Altair\CEID\Εξεταστική 2021-2022\Β' Εξάμηνο\Τεχνολογία Λογισμικού\Project\Pawsome\pawsome\Pawsome\Images\logo_transparent.png")
     confirm_password = models.CharField(max_length=200)
     events = models.ManyToManyField(Events)
-    author = models.ForeignKey(Post, on_delete=models.CASCADE,null=True)
 
 
     exclude = ('is_admin','is_active','is_staff','is_superuser')
@@ -66,7 +63,6 @@ class Users (AbstractBaseUser):
         return str(now.year)+str(now.month)+str(now.day)+str(uuid4())[:7]
 
 class PetOwner (Users):
-    pet_name = models.ForeignKey(Pet,on_delete=models.CASCADE)
     appointment = models.ForeignKey(Appointment,on_delete=models.CASCADE,null=True)
     
 class Professional (Users):

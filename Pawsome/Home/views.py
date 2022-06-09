@@ -32,9 +32,11 @@ def registerPage(request):
          
             reg_form.clean_password()
             reg=reg_form.save()
-            pet=pet_form.save()
 
 
+            pet_obj=pet_form.save(commit=False)
+            pet_obj.pet_owner = reg
+            pet=pet_obj.save()
             return redirect('registration-final' + str(reg.id) + '/' +  str(pet.id) + '/')
 
         else:
