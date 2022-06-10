@@ -16,7 +16,7 @@
 
 
 
-    <class="all-together">
+    <div class="all-together">
 
         {% for field in reg_form %}
 
@@ -34,7 +34,7 @@
 
 
                     
-                    {% if pet_form.errors %}
+                    {% if reg_form.errors %}
                     
                         {% for error in field.errors %}
 

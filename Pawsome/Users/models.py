@@ -5,9 +5,12 @@ from re import T
 from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from django.forms import ValidationError
 from Calendar.models import Appointment,Events
 import datetime
 from uuid import uuid4
+from django.core.validators import FileExtensionValidator
+
 
 from . managers import CustomUserManager
 
@@ -83,6 +86,11 @@ class Professional (Users):
 
 
     license = models.FileField()
+
+
+
+    REQUIRED_FIELDS = ['AFM','address','hours','telephone'
+    'certificate','CV','license']
     
     
     

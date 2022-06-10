@@ -129,9 +129,8 @@ def verification(request,pk3,pk4):
 
 
     if request.method == 'GET':
-        print('hwloo',pk3,pk4)
         user = Users.objects.get(id=pk3)
-        user.password1 = ''
+        user.password = ''
         speciality = pk4
         verify_form = VerificationForm(instance=user)
         verify_form.fields['speciality'].initial = speciality
@@ -142,18 +141,31 @@ def verification(request,pk3,pk4):
 
         return render(request,'certification.html',context)
 
-    else:
-        verify_form = VerificationForm(request.POST)
+    elif request.method == 'POST':
+        verify_form = VerificationForm(request.POST,request.FILES)
+
 
         if verify_form.is_valid():
             verify_form.save()
             return redirect('login')
+        else:
+            verify_form.clean()
+            context = { 'verify_form' : verify_form , 'id' : pk3, 'speciality' : pk4}
+            return render(request,'certification.html',context)
 
 
-    
+    return render(request,'certification.html',context)
 
-    return render(request,'certification.html')
 
+
+
+
+def delete_user(request,pk5):
+
+    if request.method == 'GET':
+        u = Users.objects.get(id=pk5)
+        u.delete()
+        return redirect('login')
 
 
 def org_verify(requst):
