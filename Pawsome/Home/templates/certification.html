@@ -5,18 +5,19 @@
 
 {% block content %}
 
+{% load crispy_forms_tags %}
 
 {% load static %}
 
 <link rel="stylesheet"  href="{% static 'final_reg_pro.css' %}">
 
-  <form method="POST" action="" id="pro_form">
+  <form method="POST" action="{% url 'verification' id speciality %}" id="pro_form" enctype="multipart/form-data">
 
     {% csrf_token %}
 
     <div class="all-together-pro">
 
-        {% for field in verify_form%}
+        {% for field in verify_form %}
 
         <div class="all-fields-pro">
                 <p>
@@ -62,7 +63,8 @@
                     The attestation of your data are in progress.
                     Please wait... 
                     
-                    <div class="loader"></div>
+                    <div class="spinner-border text-primary" role="status">
+                      </div>
 
                     <button id="ok">Ok</button>
 
@@ -75,7 +77,7 @@
 
         <div class="buttons">
              <input id="Open-Cert-Popup" class="btn btn-primary cfg" type="submit" value="Next">
-             <a id="back" href="{% url 'login' %}">Back</a>
+             <a id="back" href="{% url 'deleteUser' id  %}">Back</a>
         </div>
 
 {% endblock content %}
@@ -88,10 +90,13 @@
 
             var CertPopup = document.getElementById("Cert-Popup");
 
-            var openCertPopup = document.getElementById("Open-Cert-Popup")
-            var closeCertPopup = document.getElementById("ok")
+            var openCertPopup = document.getElementById("Open-Cert-Popup");
+            var closeCertPopup = document.getElementById("ok");
 
-            var loader = document.getElementsByClassName("loader")
+            var loader = document.getElementsByClassName("loader");
+
+            var input = document.querySelector(".input");
+            var button = document.querySelector(".button");
 
             closeCertPopup.addEventListener('click', () => {
                 CertPopup.style.display = "none";
@@ -113,36 +118,9 @@
 
 
 
-        $(document).ready(function() {
-                    validate();
-                    $('input').on('keyup', validate);
-                    });
+           
 
-                    function validate() {
-                    var inputsWithValues = 0;
-                    
-                    // get all input fields except for type='submit'
-                    var myInputs = $("input:not([type='submit'])");
-
-                    myInputs.each(function(e) {
-                        // if it has a value, increment the counter
-                        if ($(this).val()) {
-                        inputsWithValues += 1;
-                        }
-                    });
-
-                    
-
-                    if (inputsWithValues == myInputs.length-1) {
-                        $("input[type=submit]").prop("disabled", false);
-                    } else {
-                        alert(inputsWithValues);
-                        alert(myInputs.length);
-                        $("input[type=submit]").prop("disabled", true);
-                    }
-                }
-
-
+     
 
 
 

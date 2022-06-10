@@ -47,9 +47,14 @@ INSTALLED_APPS = [
     'Calendar',
     'Forum',
     'Donation',
-    'Pet'
+    'Pet',
+
+    #Bootstrap 4
+    'crispy_forms'
 
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +83,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'Pawsome.wsgi.application'
 

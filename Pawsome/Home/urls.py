@@ -14,5 +14,6 @@ urlpatterns=[
     path('',views.home,name='home'),
     path("logout/", LogoutView.as_view(template_name="logout.html"), name="logout"),
     path("registration/verification<str:pk3>/<str:pk4>/",views.verification,name="verification"),
-    path("org-verify/",views.org_verify,name="org-verify")
+    path("org-verify/",views.org_verify,name="org-verify"),
+    path('deleteUser/<str:pk5>/',views.delete_user,name="deleteUser")
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

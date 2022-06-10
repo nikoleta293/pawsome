@@ -108,7 +108,24 @@ class VerificationForm(ModelForm):
         
 
     field_order = ['username', 'email','profile_image','AFM',
-    'address','telephone','hours','certificate','CV']
+    'address','telephone','hours','certificate','CV','license']
+
+    def clean(self):
+        cd = self.cleaned_data
+        cert = cd.get('certificate', None)
+        CV = cd.get('CV', None)
+        lic = cd.get('license',None)
+        if cert is not None and CV is not None and lic is not None:
+            main1, sub1 = cert.content_type.split('/')
+            main2, sub2 = CV.content_type.split('/')
+            main3, sub3 = lic.content_type.split('/')
+            if not (main1 in ["application", "octet-stream"] and sub1 == "pdf"):
+                return self.add_error('certificate', "Please upload a PDF format")
+            if not (main2 in ["application", "octet-stream"] and sub2 == "pdf"):
+                return self.add_error('CV', "Please upload a PDF format")
+            if not (main3 in ["application", "octet-stream"] and sub3 == "pdf"):
+                return self.add_error('license', "Please upload a PDF format")
+            return cd
 
 
 
