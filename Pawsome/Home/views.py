@@ -1,13 +1,16 @@
-import json
-import re
-from sys import prefix
-from django.http import JsonResponse
+from distutils.command.sdist import sdist
 from django.shortcuts import redirect, render
-from . forms import RegistrationForm, PetForm, LoginForm
+from . forms import RegistrationForm, PetForm, LoginForm,SpecialityForm, VerificationForm
 from Users.models import Users
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.core.serializers import serialize
+from Pet.models  import Pet
+
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -18,51 +21,73 @@ def is_ajax(request):
 def registerPage(request):
     reg_form = RegistrationForm()
     pet_form = PetForm()
+    special_form = SpecialityForm()
    
-    context = {'reg_form' : reg_form , 'pet_form' : pet_form}
+    context = {'reg_form' : reg_form , 'pet_form' : pet_form,'special_form' : special_form}
 
     if request.method == 'POST':
 
         reg_form = RegistrationForm(request.POST)
-        pet_form = PetForm(request.POST)
+        pet_form = PetForm(request.POST,request.FILES)
+        special_form = SpecialityForm(request.POST)
 
-        if reg_form.is_valid() and pet_form.is_valid():
-         
-            reg_form = json.dumps(reg_form.cleaned_data)
-            pet_form = json.dumps(pet_form.cleaned_data)
+        if reg_form.is_valid() and special_form.is_valid():
             
-            request.session['reg_form'] = reg_form
-            request.session['pet_form'] = pet_form
+            reg_form.clean_password()
+            reg=reg_form.save()
+            special = special_form.cleaned_data['speciality']
+            logger.warning('Platform is running at risk')
+            return redirect('verification' + str(reg.id) + '/' + str(special) + '/')
 
-            return redirect('final-register')
-
+        elif reg_form.is_valid() and pet_form.is_valid():
             
+            reg_form.clean_password()
+            reg=reg_form.save()
+            pet_obj=pet_form.save()
+            pet_obj.pet_owner = reg
+            pet=pet_obj.save()
+            return redirect('registration-final' + str(reg.id) + '/' +  str(pet.id) + '/')
+                
         
+           
+        else:
+            pet_form = PetForm()
+            context = {'reg_form' : reg_form , 'pet_form' : pet_form,'special_form' : special_form}
+            return render(request,'registerPage.html',context)
+
+            
     
 
     return render(request,'registerPage.html',context)
 
 
-def registerAll(request):
+def registerAll(request,pk,pk2):
 
-    reg_form = RegistrationForm(json.loads(request.session['reg_form']))
-    pet_form = PetForm(json.loads(request.session['pet_form']))
-
-    """ reg_form = request.session['reg_form']
-    pet_form = request.session['pet_form'] """
-
-    context = {'reg_form' : reg_form , 'pet_form' : pet_form}
-
-
+    reg_form = RegistrationForm()
+    pet_form = PetForm()
+   
+   
     if request.method == 'POST':
+
+        reg_form = RegistrationForm(request.POST)
+        pet_form = PetForm(request.POST,request.FILES)
         
         if reg_form.is_valid() and pet_form.is_valid():
             reg_form.clean_password()
             reg_form.save()
             pet_form.save()
             redirect('login')
+
+    elif request.method == 'GET':
+        user = Users.objects.get(id=pk)
+        pet = Pet.objects.get(id=pk2)
+        reg_form = RegistrationForm(instance=user)
+        pet_form = PetForm(instance=pet)
+        context = { 'reg_form' : reg_form, 'pet_form' : pet_form,'user' : user , 'pet' : pet}
+
+        return render(request,'final_register.html',context)
     
-    return render(request,'final_register.html',context)
+    return redirect('login')
 
 
 
@@ -90,3 +115,45 @@ def loginPage(request):
 def home(request):
 
     return render(request,'homePage.html')
+
+def verification(request,pk3,pk4):
+    verify_form = VerificationForm()
+
+
+    if request.method == 'GET':
+        user = Users.objects.get(id=pk3)
+        speciality = pk4
+        verify_form = VerificationForm(instance=user)
+        dict = { 'password' : getattr(user,'password')}
+        request.session['dict'] =  dict
+        user.delete()
+        verify_form.fields['speciality'].initial = speciality
+        verify_form.fields['speciality'].widget.attrs['readonly'] = True
+    
+        context = { 'verify_form' : verify_form , 'id' : pk3, 'speciality' : pk4}
+
+        return render(request,'certification.html',context)
+
+    elif request.method == 'POST':
+        verify_form = VerificationForm(request.POST.copy(),request.FILES.copy())
+        verify_form.data['password'] = request.session['dict'].get('password')
+        print(verify_form.data['password'])
+        if verify_form.is_valid():    
+            verify_form.clean()
+            verify_form.save()
+            return redirect('login')
+        else:
+            context = { 'verify_form' : verify_form , 'id' : pk3, 'speciality' : pk4}
+            return render(request,'certification.html',context)
+
+
+    return render(request,'certification.html',context)
+
+
+
+
+
+
+
+def org_verify(requst):
+    pass

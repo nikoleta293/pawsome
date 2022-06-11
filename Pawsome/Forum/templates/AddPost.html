@@ -1,18 +1,21 @@
-{% extends 'Forumpage.html'%}
+{% load bootstrap4 %}
 
+{% block content %}
 
-{% block content%}
+{% load static %}
 
-<h1>Add your post</h1>
+<link rel="stylesheet"  href="{% static 'forum.css' %}">
+
+<h4>Add your post</h4>
 <div class= "form-group">
     <form method="POST"
         {% csrf_token %}
-        {{ form.as_p}}
-        <button>Post</button>
-
+        {% bootstrap_form form %}
+        {% buttons %}
+            <input class="btn btn-primary cfg" type="submit" value="Add Post">
+        {% endbuttons %}
     </form>
 
 </div>
 
-
-    {% endblock%}
+{% endblock %}

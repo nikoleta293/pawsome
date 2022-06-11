@@ -10,7 +10,7 @@
 
    <link rel="stylesheet"  href="{% static 'final_reg.css' %}">
 
-  <form method="POST" action="" id="all_reg_form">
+  <form method="POST" action="{% url 'final-register' user.id pet.id %}" id="all_reg_form">
 
     {% csrf_token %}
 
@@ -33,14 +33,18 @@
                     {% endif  %}
 
 
-                    {% for error in field.errors %}
+                    
+                    {% if reg_form.errors %}
+                    
+                        {% for error in field.errors %}
 
+                            <p style="color: red;">{{error}}</p>
+                        
+                        
+                        {% endfor %}
 
-                        <p id="errors" style="color: red;">{{error}}</p>
-
-
-                    {% endfor %}
-
+                    {% endif %}
+                   
                 </p>
 
             </div>
@@ -51,30 +55,41 @@
 
                     <div class="all-fields-pet">
                         <p>
-            
-                            {{field.label_tag}}
-                            {{field}}
-            
-                            {% if field.help_text %}
-            
-                                <small style="color:grey;">{{field.help_text}}</small>
-            
-                            {% endif  %}
-            
-            
-                            {% for error in field.errors %}
-            
-            
-                                <p style="color: red;">{{error}}</p>
-            
-            
-                            {% endfor %}
+                                {{field.label_tag}}
+                                {{field}}
+                
+                                {% if field.help_text %}
+                
+                                    <small style="color:grey;">{{field.help_text}}</small>
+                
+                                {% endif  %}
+                
+                
+                                {% if pet_form.errors %}
+                
+                                    {% for error in field.errors %}
+
+                                        <p style="color: red;">{{error}}</p>
+                                    
+                                    
+                                    {% endfor %}
+                
+                                {% endif %}
             
                         </p>
                     </div>
-        
-        {% endfor %}
 
+        {% endfor %}
+        
+  
+        <img src="{{ pet_form.img.url }}" alt="">
+
+        {% if pet_form.img.errors %}
+
+          <p style="color: red;">{{pet_form.img.error}}</p>
+
+        {% endif %}
+        
       <div class="buttons">
         <input id="register" type="submit" value="Register">
         <a id="back" href="{% url 'login' %}">Back</a>

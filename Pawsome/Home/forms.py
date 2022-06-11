@@ -1,8 +1,10 @@
+from dataclasses import field
 from django.forms import ModelForm,TextInput
-from Users.models import Users
 from Pet.models import Pet
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.utils.safestring import mark_safe
+from Users.models import Professional,Users
 
 class RegistrationForm(UserCreationForm):
 
@@ -10,16 +12,19 @@ class RegistrationForm(UserCreationForm):
    
     class Meta:
         model = Users
-        fields = {"email","username","password1","password2"}
+        fields = {"email","username","password1","password2","role"}
         widgets = {
             'email': TextInput(attrs={'class': 'my_form','id' : 'email'}),
             'username': TextInput(attrs={'class': "my_form",'id' : 'username'}),
             'password1': TextInput(attrs={'class': 'my_form','id' : 'password1'}),
-            'password2': TextInput(attrs={'class': 'my_form', 'id' : 'password2'})
+            'password2': TextInput(attrs={'class': 'my_form', 'id' : 'password2'}),
+            'role' : forms.Select(attrs = { 'class' : 'myform','id' : 'role'})
             }
+
+
     
     
-    field_order = ['username', 'email', 'password1','password2']
+    field_order = ['username', 'email','role','password1','password2']
 
     
     def clean_password(self):
@@ -61,14 +66,32 @@ class RegistrationForm(UserCreationForm):
         for field in self._meta.get_fields():
             field_values.append(getattr(self, field, ''))
         return ' '.join(field_values)
+
+   
+    def clean_email(self):
+       email  = self.cleaned_data.get('email')
+       if Users.objects.filter(email=email).exists():
+            raise forms.ValidationError("Email is not unique")
+       return email
     
+
+
+    def clean_role(self):
+        data = self.cleaned_data.get('role')
+        if data == self.fields['role'].choices[0][0]:
+            raise forms.ValidationError('This field is required')
+        return data
+
+
+
 
 class PetForm(ModelForm):
 
      class Meta:
         model = Pet
-        fields = ['pet_name','age','gender']
+        fields = ['pet_name','age','gender','img']
 
+    
 
 
 class LoginForm(ModelForm):
@@ -83,3 +106,66 @@ class LoginForm(ModelForm):
 
     
      field_order = ['email', 'password']
+
+class VerificationForm(ModelForm):
+
+    class Meta:
+        model = Professional
+        exclude = ('appointment',
+        'is_admin','is_active','is_staff',
+        'is_superuser','events','role',
+        'last_login'
+        )
+        
+        
+
+    field_order = ['username', 'email','profile_image','AFM',
+    'address','telephone','opening','closing','certificate','CV','license']
+
+    def clean(self):
+        cd = self.cleaned_data
+        cert = cd.get('certificate', None)
+        CV = cd.get('CV', None)
+        lic = cd.get('license',None)
+        if cert is not None and CV is not None and lic is not None:
+            main1, sub1 = cert.content_type.split('/')
+            main2, sub2 = CV.content_type.split('/')
+            main3, sub3 = lic.content_type.split('/')
+            if not (main1 in ["application", "octet-stream"] and sub1 == "pdf"):
+                return self.add_error('certificate', "Please upload a PDF format")
+            if not (main2 in ["application", "octet-stream"] and sub2 == "pdf"):
+                return self.add_error('CV', "Please upload a PDF format")
+            if not (main3 in ["application", "octet-stream"] and sub3 == "pdf"):
+                return self.add_error('license', "Please upload a PDF format")
+            return cd
+
+
+
+
+
+
+
+
+special =(
+        ('Vet','Vet'),
+        ('pet-trainer','Pet Trainer'),
+        ('pet-sitter', 'Pet sitter')
+    )
+
+
+
+
+
+
+
+class SpecialityForm(ModelForm):
+
+    speciality = forms.ChoiceField(
+        choices=special,
+        widget=forms.RadioSelect())
+
+    class Meta:
+        model = Professional
+        fields = ['speciality']
+        
+        

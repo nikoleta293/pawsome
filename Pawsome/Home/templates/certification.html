@@ -1,0 +1,135 @@
+{% extends 'main.html' %}
+
+
+
+
+{% block content %}
+
+{% load static %}
+
+<link rel="stylesheet"  href="{% static 'final_reg_pro.css' %}">
+
+  <form method="POST" action="{% url 'verification' id speciality %}" id="pro_form" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <div class="all-together-pro">
+
+        {% for field in verify_form %}
+
+        <div class="all-fields-pro">
+                <p>
+
+                    {% if field.name != "password" %}
+
+                            <label class="tags" for="{{field.id_for_label}}">{{field.label_tag}}</label>
+                            {{field}}
+
+
+                            {% if field.name == "profile_image" %}
+
+                            <span>Default Image</span>
+
+                             <img src="{{ field.profile_image.url }}" alt="">
+
+                            {% endif %}
+
+                            
+                            
+                            {% if field.help_text %}
+                                <div class="help-fields">
+                                    <small id="help-text" style="color:grey;">{{field.help_text}}</small>
+                                </div>
+                            {% endif  %}
+
+
+                            
+                            {% if verify_form.errors %}
+                            
+                                {% for error in field.errors %}
+
+                                    <p id="errors" style="color: red;">{{error}}</p>
+                                
+                                
+                                {% endfor %}
+
+                            {% endif %}
+
+                    {% endif %}
+                   
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+        
+        <div id="Cert-Popup">
+
+            <table>
+              <tr>
+                <th>Attention!!!</th>
+              </tr>
+                <tr>
+                <td>
+                    The attestation of your data are in progress.
+                    Please wait... 
+                    
+                    <div class="spinner-border text-primary" role="status">
+                      </div>
+
+                    <button id="ok">Ok</button>
+
+                </td>
+               
+          </table>
+
+
+        </div>
+
+        <div class="buttons">
+             <input id="Open-Cert-Popup" class="btn btn-primary cfg" type="submit" value="Next">
+             <a id="back" href="{% url 'login' %}">Back</a>
+        </div>
+
+{% endblock content %}
+
+
+
+{% block javascript %}
+    
+        <script type="text/javascript" window.CSRF_TOKEN = "{{ csrf_token }}";>
+
+            var CertPopup = document.getElementById("Cert-Popup");
+
+            var openCertPopup = document.getElementById("Open-Cert-Popup");
+            var closeCertPopup = document.getElementById("ok");
+
+            var loader = document.getElementsByClassName("loader");
+
+            var input = document.querySelector(".input");
+            var button = document.querySelector(".button");
+
+            closeCertPopup.addEventListener('click', () => {
+                CertPopup.style.display = "none";
+            })
+
+            openCertPopup.addEventListener('click',()=>{
+
+                CertPopup.style.display = "block";
+
+               
+                setTimeout(() => {
+
+                    CertPopup.style.display = "none";
+
+                    }, "5000")
+
+            })
+
+
+
+        </script>
+
+
+{% endblock javascript %}
