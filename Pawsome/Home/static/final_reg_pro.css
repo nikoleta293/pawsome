@@ -1,9 +1,9 @@
 .all-fields-pro
 {
     display: grid;
-    grid-template-rows: repeat(8,7px);
+    grid-template-rows: repeat(9,7px);
     grid-template-columns: repeat(4,10fr);
-    row-gap: 8px;
+    row-gap: 10px;
 
 }
 
@@ -22,6 +22,23 @@ p
 	bottom: 40vh;
 	z-index: 9;
 
+}
+
+
+
+label[for=id_opening]
+{  
+    position: relative;
+    left: 60vw;
+    bottom: 18.5vh;
+}
+
+
+#id_opening
+{
+    position: relative;
+    left: 60vw;
+    bottom: 37vh;
 }
 
 
@@ -76,20 +93,10 @@ label[for=id_telephone]
 }
 
 
-label[for=id_hours]
-{  
-    position: relative;
-    left : 30vw;
-    bottom: 18.5vh;
-  
-}
 
-#id_hours
-{
-    position: relative;
-    left: 60vw;
-    bottom: 37vh;
-}
+
+
+
 
 
 label[for=id_certificate]
@@ -126,7 +133,7 @@ label[for=id_speciality]
 {  
     position: relative;
     left : 30vw;
-    bottom: 18.5vh;
+    bottom: 22.5vh;
   
 }
 
@@ -134,7 +141,7 @@ label[for=id_speciality]
 {
     position: relative;
     left: 60vw;
-    bottom: 37vh;
+    bottom: 39vh;
 }
 
 

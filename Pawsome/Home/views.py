@@ -58,7 +58,6 @@ def registerPage(request):
            
         else:
             pet_form = PetForm()
-            special_form = SpecialityForm()
             context = {'reg_form' : reg_form , 'pet_form' : pet_form,'special_form' : special_form}
             return render(request,'registerPage.html',context)
 
@@ -132,6 +131,7 @@ def verification(request,pk3,pk4):
         user.password = ''
         speciality = pk4
         verify_form = VerificationForm(instance=user)
+        user.delete()
         verify_form.fields['speciality'].initial = speciality
         verify_form.fields['speciality'].widget.attrs['readonly'] = True
         
@@ -145,10 +145,10 @@ def verification(request,pk3,pk4):
 
 
         if verify_form.is_valid():
+            verify_form.clean()
             verify_form.save()
             return redirect('login')
         else:
-            verify_form.clean()
             context = { 'verify_form' : verify_form , 'id' : pk3, 'speciality' : pk4}
             return render(request,'certification.html',context)
 
@@ -156,15 +156,6 @@ def verification(request,pk3,pk4):
     return render(request,'certification.html',context)
 
 
-
-
-
-def delete_user(request,pk5):
-
-    if request.method == 'GET':
-        u = Users.objects.get(id=pk5)
-        u.delete()
-        return redirect('login')
 
 
 def org_verify(requst):

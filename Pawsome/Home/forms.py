@@ -20,6 +20,8 @@ class RegistrationForm(UserCreationForm):
             'password2': TextInput(attrs={'class': 'my_form', 'id' : 'password2'}),
             'role' : forms.Select(attrs = { 'class' : 'myform','id' : 'role'})
             }
+
+
     
     
     field_order = ['username', 'email','role','password1','password2']
@@ -73,6 +75,16 @@ class RegistrationForm(UserCreationForm):
        return email
     
 
+
+    def clean_role(self):
+        data = self.cleaned_data.get('role')
+        if data == self.fields['role'].choices[0][0]:
+            raise forms.ValidationError('This field is required')
+        return data
+
+
+
+
 class PetForm(ModelForm):
 
      class Meta:
@@ -104,11 +116,11 @@ class VerificationForm(ModelForm):
         'is_superuser','events','role',
         'last_login','password'
         )
-
+        
         
 
     field_order = ['username', 'email','profile_image','AFM',
-    'address','telephone','hours','certificate','CV','license']
+    'address','telephone','opening','closing','certificate','CV','license']
 
     def clean(self):
         cd = self.cleaned_data
@@ -126,6 +138,10 @@ class VerificationForm(ModelForm):
             if not (main3 in ["application", "octet-stream"] and sub3 == "pdf"):
                 return self.add_error('license', "Please upload a PDF format")
             return cd
+
+
+
+
 
 
 
