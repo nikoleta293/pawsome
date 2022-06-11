@@ -6,12 +6,31 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap Calendar CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
-  <!-- <link rel="stylesheet" type="text/css" href="{'%'cal.css'%}"> -->
+>
  
-  <style> body {margin: 0; background: #181824; font-family: Arial; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../static/fonts/icomoon/style.css">
+
+<link href='../static/fullcalendar/packages/core/main.css' rel='stylesheet' />
+<link href='../static/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../static/css/bootstrap.min.css">
+
+<!-- Style -->
+<link rel="stylesheet" href="../static/css/style.css">
+
+  <style> body {margin: 0; background: #eaeaf1; font-family: Arial; }
     nav {
         position: fixed;
         width: 100%;
@@ -75,8 +94,8 @@
     .vertical-menu-wrapper ul, .vertical-menu-wrapper hr{transition: all 100ms;}
     .content-wrapper{background: #ebebeb;}
     .content{
-        width: 90%;
-        min-height: 90%;
+        width: 95%;
+        min-height: 95%;
         background: #fff;
         border-radius: 10px;
         padding: 30px;
@@ -102,12 +121,16 @@
         <li>Pet info</li>
     </ul>
 </nav>
-<div class="content-wrapper">
-  <div class="content">
-    {% block content %}
-  {% endblock %}
 
-  <!-- Optional JavaScript -->
+
+ <div id='calendar-container'>
+     <div id='calendar'></div>
+  </div> 
+</div>
+
+
+{% block javascript %}
+<!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
@@ -116,18 +139,82 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 
-  {% block script %}
-  {% endblock %}
-  </div>
-</div>
-{% block javascript %}
+
+    
 <script>
+  
   $('.open-menu-btn').on('click', function(){
     if($('body').hasClass('closed-menu')){
       $('body').removeClass('closed-menu');
     }else  $('body').addClass('closed-menu');
   });
 </script>
+
+
+<script src="../static/js/jquery-3.3.1.min.js"></script>
+<script src="../static/js/popper.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+<script src='../static/fullcalendar/packages/core/main.js'></script>
+<script src='../static/fullcalendar/packages/interaction/main.js'></script>
+<script src='../static/fullcalendar/packages/daygrid/main.js'></script>
+<script src='../static/fullcalendar/packages/timegrid/main.js'></script>
+<script src='../static/fullcalendar/packages/list/main.js'></script>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+var calendarEl = document.getElementById('calendar');
+
+var calendar = new FullCalendar.Calendar(calendarEl, {
+  plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+  height: 'parent',
+  header: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+  },
+  defaultView: 'dayGridMonth',
+  defaultDate: '2020-02-12',
+  navLinks: true, // can click day/week names to navigate views
+  editable: true,
+  eventLimit: true, // allow "more" link when too many events
+  events: [
+    {
+      title: 'All Day Event',
+      start: '2022-06-01',
+    },
+    {
+      title: 'Long Event',
+      start: '2022-06-08',
+      end: '2020-06-09'
+    },
+    {
+      groupId: 999,
+      title: 'Repeating Event',
+      start: '2022-06-09T16:00:00'
+    },
+    {
+      groupId: 999,
+      title: 'Repeating Event',
+      start: '2022-06-16T16:00:00'
+    },
+    {
+      title: 'Conference',
+      start: '2022-06-12',
+      end: '2022-06-12'
+    },
+    
+  ]
+});
+
+calendar.render();
+});
+
+</script>
+
+<script src="../static/js/main.js"></script>
 {% endblock javascript %}
 </body>
 </html>
