@@ -102,13 +102,18 @@ class VerificationForm(ModelForm):
         exclude = ('appointment',
         'is_admin','is_active','is_staff',
         'is_superuser','events','role',
-        'last_login','password'
+        'last_login'
         )
+        widgets = {
+            'profile_image' : forms.FileInput(attrs={
+                'id' : 'image'
+            })
+        }
 
         
 
-    field_order = ['username', 'email','profile_image','AFM',
-    'address','telephone','hours','certificate','CV','license']
+    field_order = ['username' 'email','profile_,image','AFM',
+    'address','telephone','hours','certificate','CV','license','speciality','password']
 
     def clean(self):
         cd = self.cleaned_data

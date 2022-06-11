@@ -2,8 +2,8 @@
 {
     display: grid;
     grid-template-rows: repeat(8,7px);
-    grid-template-columns: repeat(4,10fr);
-    row-gap: 8px;
+    grid-template-columns: repeat(2,10fr);
+    row-gap: 7px;
 
 }
 
@@ -24,13 +24,55 @@ p
 
 }
 
+label[for=id_username]
+{  
+    position: relative;
+    bottom: 64vh;
+}
+
+
+#id_username
+{
+    position: relative;
+    bottom: 128.1vh;
+    
+    
+}
+
+label[for=id_email]
+{  
+    position: relative;
+    bottom: 64vh;
+}
+
+
+#id_email
+{
+    position: relative;
+    bottom: 128.1vh;
+    
+    
+}
+
+
+label[for=image]
+{  
+    position: relative;
+    bottom: 64vh;
+}
+
+
+#image
+{
+    position: relative;
+    bottom: 128.1vh;
+}
 
 
 label[for=id_AFM]
 {  
     position: relative;
     left: 30vw;
-    bottom: 22.9vh;
 }
 
 
@@ -38,16 +80,15 @@ label[for=id_AFM]
 {
     position: relative;
     left: 60vw;
-    bottom: 46vh;
+    
 }
-
 
 
 label[for=id_address]
 {  
     position: relative;
-    left: 30vw;
-    bottom: 22.9vh;
+    left : 30vw;
+    
   
 }
 
@@ -55,15 +96,16 @@ label[for=id_address]
 {
     position: relative;
     left: 60vw;
-    bottom: 46vh;
+    
 }
 
 
 label[for=id_telephone]
 {  
     position: relative;
-    left: 30vw;
-    bottom: 22.9vh;
+    left : 30vw;
+    
+  
 }
 
 
@@ -71,15 +113,15 @@ label[for=id_telephone]
 {
     position: relative;
     left: 60vw;
-    bottom: 46vh;
+    
 }
 
 
 label[for=id_hours]
 {  
     position: relative;
-    left: 30vw;
-    bottom: 22.9vh;
+    left : 30vw;
+    
   
 }
 
@@ -87,15 +129,15 @@ label[for=id_hours]
 {
     position: relative;
     left: 60vw;
-    bottom: 46vh;
+    
 }
 
 
 label[for=id_certificate]
 {  
     position: relative;
-    left: 30vw;
-    bottom: 22.9vh;
+    left : 30vw;
+    
   
 }
 
@@ -103,14 +145,14 @@ label[for=id_certificate]
 {
     position: relative;
     left: 60vw;
-    bottom: 46vh;
+    
 }
 
 label[for=id_CV]
 {  
     position: relative;
-    left: 30vw;
-    bottom: 22.9vh;
+    left : 30vw;
+    
   
 }
 
@@ -118,29 +160,30 @@ label[for=id_CV]
 {
     position: relative;
     left: 60vw;
-    bottom: 46vh;
+   
 }
 
 label[for=id_speciality]
 {  
     position: relative;
-    left: 30vw;
-    bottom: 22.9vh;
+    left : 30vw;
+    
+  
 }
 
 #id_speciality
 {
     position: relative;
     left: 60vw;
-    bottom: 46vh;
+    
 }
 
 
 label[for=id_license]
 {  
     position: relative;
-    left: 30vw;
-    bottom: 22.9vh;
+    left : 30vw;
+    
   
 }
 
@@ -148,8 +191,11 @@ label[for=id_license]
 {
     position: relative;
     left: 60vw;
-    bottom: 46vh;
+    
 }
+
+
+
 
 .btn btn-primary cfg
 {

@@ -130,9 +130,9 @@ def verification(request,pk3,pk4):
 
     if request.method == 'GET':
         user = Users.objects.get(id=pk3)
-        user.password = ''
         speciality = pk4
         verify_form = VerificationForm(instance=user)
+        user.delete()
         verify_form.fields['speciality'].initial = speciality
         verify_form.fields['speciality'].widget.attrs['readonly'] = True
         
@@ -160,12 +160,6 @@ def verification(request,pk3,pk4):
 
 
 
-def delete_user(request,pk5):
-
-    if request.method == 'GET':
-        u = Users.objects.get(id=pk5)
-        u.delete()
-        return redirect('login')
 
 
 def org_verify(requst):
