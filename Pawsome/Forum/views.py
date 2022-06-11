@@ -11,21 +11,6 @@ from .forms import PostForm
 from django.views.generic.base import TemplateResponseMixin
 
 
-""" class ForumView(ListView):
-    model=Post
-    template_name = 'Forumpage.html'
-
-    
-
-class AddPostView(CreateView):
-    model= Post
-    form_class = PostForm
-    template_name ='AddPost.html'
-    fields = ['post_text']
- 
- """
-
-
 class FormAndListView(BaseCreateView, BaseListView, TemplateResponseMixin):
     
     model = Post

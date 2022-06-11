@@ -1,4 +1,4 @@
-{'% load static %}
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -6,18 +6,131 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap Calendar CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
-  <link rel="stylesheet" type="text/css" href="{'% static 'Calendar/css/cal.css' %}">
+>
  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../static/fonts/icomoon/style.css">
+
+<link href='../static/fullcalendar/packages/core/main.css' rel='stylesheet' />
+<link href='../static/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../static/css/bootstrap.min.css">
+
+<!-- Style -->
+<link rel="stylesheet" href="../static/css/style.css">
+
+  <style> body {margin: 0; background: #eaeaf1; font-family: Arial; }
+    nav {
+        position: fixed;
+        width: 100%;
+        max-width: 300px;
+        bottom: 0; top: 0;
+        display: block;
+        min-height: 300px;
+        height: 100%;
+        color: #fff;
+        opacity: 0.8;
+        transition: all 300ms;
+        -moz-transition: all 300ms;
+        -webkit-transition: all 300ms;
+    }
+    nav .vertical-menu hr{opacity: 0.1; border-width: 0.5px;}
+    nav ul{width: 90%; padding-inline-start: 0; margin: 10px; height: calc(100% - 20px); }
+    nav .vertical-menu-logo{padding: 20px; font-size: 1.3em; position: relative}
+    nav .vertical-menu-logo .open-menu-btn{width: 30px; height: max-content; position: absolute; display: block; right: 20px; top: 0; bottom: 0; margin: auto; cursor: pointer;}
+    nav .vertical-menu-logo .open-menu-btn hr{margin: 5px 0}
+    nav li{list-style: none; padding: 10px 10px; cursor: pointer;}
+    nav li:hover{ color: rgba(75, 105, 176,1); }
+    nav li#user-info{position: absolute; bottom: 0; width: 80%;}
+    nav li#user-info > span{display: block; float: right; font-size: 0.9em; position: relative; opacity: 0.6;}
+    nav li#user-info > span:after{
+        content: '';
+        width: 12px;
+        height: 12px;
+        display: block;
+        position: absolute;
+        background: green;
+        left: -20px; top: 0; bottom: 0;
+        margin: auto;
+        border-radius: 50%;
+    }
+    .content-wrapper{
+        width: calc(100% - 300px);
+        height: 100%;
+        position: fixed;
+        background: #fff;
+        left: 300px;
+        padding: 20px;
+    }
+    .closed-menu .content-wrapper{
+        width: 100%;
+        left: 50px;
+    }
+    .content-wrapper{
+        transition: all 300ms;
+    }
+    .vertical-menu-wrapper .vertical-menu-logo div{transition: all 100ms;}
+    .closed-menu .vertical-menu-wrapper .vertical-menu-logo div{
+        margin-left: -100px;
+    }
+    .vertical-menu-wrapper .vertical-menu-logo .open-menu-btn{transition: all 300ms;}
+    .closed-menu .vertical-menu-wrapper .vertical-menu-logo .open-menu-btn{
+        left: 7px;
+        right: 100%;
+    }
+
+    .closed-menu .vertical-menu-wrapper ul,.closed-menu .vertical-menu-wrapper hr{margin-left: -300px;}
+    .vertical-menu-wrapper ul, .vertical-menu-wrapper hr{transition: all 100ms;}
+    .content-wrapper{background: #ebebeb;}
+    .content{
+        width: 95%;
+        min-height: 95%;
+        background: #fff;
+        border-radius: 10px;
+        padding: 30px;
+    }
+    </style>
 </head>
 <body>
+  
 
-  {'% block content %}
-  {'% endblock %}
+  <nav class="vertical-menu-wrapper">
+    <div class="vertical-menu-logo">
+        <div>
+          <img src="../../Images/favicon.png" alt="Pawsome Logo">
+        </div>
+        <span class="open-menu-btn"><hr><hr><hr></span>
+    </div>
+    <ul class="vertical-menu">
+        <li>Search</li>
+        <li>Forum</li>
+        <hr />
+        <li>Settings</li>
+        <li>User info</li>
+        <li>Pet info</li>
+    </ul>
+</nav>
 
-  <!-- Optional JavaScript -->
+
+ <div id='calendar-container'>
+     <div id='calendar'></div>
+  </div> 
+</div>
+
+
+{% block javascript %}
+<!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
@@ -26,7 +139,82 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 
-  {'% block script %}
-  {'% endblock %}
+
+    
+<script>
+  
+  $('.open-menu-btn').on('click', function(){
+    if($('body').hasClass('closed-menu')){
+      $('body').removeClass('closed-menu');
+    }else  $('body').addClass('closed-menu');
+  });
+</script>
+
+
+<script src="../static/js/jquery-3.3.1.min.js"></script>
+<script src="../static/js/popper.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+<script src='../static/fullcalendar/packages/core/main.js'></script>
+<script src='../static/fullcalendar/packages/interaction/main.js'></script>
+<script src='../static/fullcalendar/packages/daygrid/main.js'></script>
+<script src='../static/fullcalendar/packages/timegrid/main.js'></script>
+<script src='../static/fullcalendar/packages/list/main.js'></script>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+var calendarEl = document.getElementById('calendar');
+
+var calendar = new FullCalendar.Calendar(calendarEl, {
+  plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+  height: 'parent',
+  header: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+  },
+  defaultView: 'dayGridMonth',
+  defaultDate: '2020-02-12',
+  navLinks: true, // can click day/week names to navigate views
+  editable: true,
+  eventLimit: true, // allow "more" link when too many events
+  events: [
+    {
+      title: 'All Day Event',
+      start: '2022-06-01',
+    },
+    {
+      title: 'Long Event',
+      start: '2022-06-08',
+      end: '2020-06-09'
+    },
+    {
+      groupId: 999,
+      title: 'Repeating Event',
+      start: '2022-06-09T16:00:00'
+    },
+    {
+      groupId: 999,
+      title: 'Repeating Event',
+      start: '2022-06-16T16:00:00'
+    },
+    {
+      title: 'Conference',
+      start: '2022-06-12',
+      end: '2022-06-12'
+    },
+    
+  ]
+});
+
+calendar.render();
+});
+
+</script>
+
+<script src="../static/js/main.js"></script>
+{% endblock javascript %}
 </body>
 </html>

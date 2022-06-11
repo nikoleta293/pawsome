@@ -85,7 +85,7 @@ label[for=id_closing]
 {
     position: relative;
     left: 60vw;
-    bottom: 52.5vh;
+    bottom: 37vh;
 }
 
 
@@ -93,7 +93,7 @@ label[for=id_AFM]
 {  
     position: relative;
     left : 30vw;
-    bottom: 26vh;
+    bottom: 18.5vh;
     
   
 }
@@ -103,15 +103,14 @@ label[for=id_address]
 {  
     position: relative;
     left : 30vw;
-    bottom: 26vh;
-  
+    bottom: 22vh;
 }
 
 #id_address
 {
     position: relative;
     left: 60vw;
-    bottom: 52.5vh;
+    bottom: 44vh;
     
 }
 
@@ -120,7 +119,7 @@ label[for=id_telephone]
 {  
     position: relative;
     left : 30vw;
-    bottom: 26vh;
+    bottom: 25vh;
   
 }
 
@@ -129,7 +128,7 @@ label[for=id_telephone]
 {
     position: relative;
     left: 60vw;
-    bottom: 52.5vh;
+    bottom: 50vh;
 }
 
 

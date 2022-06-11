@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'Pet',
 
     #Bootstrap 4
-    'crispy_forms'
+    'bootstrap4'
+
 
 ]
 

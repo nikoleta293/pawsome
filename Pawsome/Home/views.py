@@ -1,19 +1,12 @@
 from distutils.command.sdist import sdist
-import json
-import re
-from sys import prefix
-from turtle import pen
-from django.http import JsonResponse
 from django.shortcuts import redirect, render
-
-from Users.models import PetOwner,Professional
 from . forms import RegistrationForm, PetForm, LoginForm,SpecialityForm, VerificationForm
 from Users.models import Users
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.core.serializers import serialize
 from Pet.models  import Pet
-from .serializers import VSerializer
+
 
 import logging
 
