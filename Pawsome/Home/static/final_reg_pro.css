@@ -3,7 +3,7 @@
     display: grid;
     grid-template-rows: repeat(8,7px);
     grid-template-columns: repeat(2,10fr);
-    row-gap: 7px;
+    row-gap: 10px;
 
 }
 
@@ -24,35 +24,6 @@ p
 
 }
 
-label[for=id_username]
-{  
-    position: relative;
-    bottom: 64vh;
-}
-
-
-#id_username
-{
-    position: relative;
-    bottom: 128.1vh;
-    
-    
-}
-
-label[for=id_email]
-{  
-    position: relative;
-    bottom: 64vh;
-}
-
-
-#id_email
-{
-    position: relative;
-    bottom: 128.1vh;
-    
-    
-}
 
 
 label[for=image]
@@ -69,10 +40,44 @@ label[for=image]
 }
 
 
-label[for=id_AFM]
+label[for=id_opening]
 {  
     position: relative;
     left: 30vw;
+    
+}
+
+
+#id_opening
+{
+    position: relative;
+    left: 60vw;
+    bottom: 52.5vh;
+}
+
+
+label[for=id_opening]
+{  
+    position: relative;
+    left: 30vw;
+    bottom: 26vh;
+}
+
+
+#id_closing
+{
+    position: relative;
+    left: 60vw;
+    bottom: 52.5vh;
+}
+
+
+
+label[for=id_closing]
+{  
+    position: relative;
+    left: 30vw;
+    bottom: 26vh;
 }
 
 
@@ -80,7 +85,17 @@ label[for=id_AFM]
 {
     position: relative;
     left: 60vw;
+    bottom: 52.5vh;
+}
+
+
+label[for=id_AFM]
+{  
+    position: relative;
+    left : 30vw;
+    bottom: 26vh;
     
+  
 }
 
 
@@ -88,7 +103,7 @@ label[for=id_address]
 {  
     position: relative;
     left : 30vw;
-    
+    bottom: 26vh;
   
 }
 
@@ -96,6 +111,7 @@ label[for=id_address]
 {
     position: relative;
     left: 60vw;
+    bottom: 52.5vh;
     
 }
 
@@ -104,7 +120,7 @@ label[for=id_telephone]
 {  
     position: relative;
     left : 30vw;
-    
+    bottom: 26vh;
   
 }
 
@@ -113,31 +129,17 @@ label[for=id_telephone]
 {
     position: relative;
     left: 60vw;
-    
+    bottom: 52.5vh;
 }
 
 
-label[for=id_hours]
-{  
-    position: relative;
-    left : 30vw;
-    
-  
-}
-
-#id_hours
-{
-    position: relative;
-    left: 60vw;
-    
-}
 
 
 label[for=id_certificate]
 {  
     position: relative;
     left : 30vw;
-    
+    bottom: 26vh;
   
 }
 
@@ -145,14 +147,14 @@ label[for=id_certificate]
 {
     position: relative;
     left: 60vw;
-    
+    bottom: 52.5vh;
 }
 
 label[for=id_CV]
 {  
     position: relative;
     left : 30vw;
-    
+    bottom: 26vh;
   
 }
 
@@ -160,14 +162,14 @@ label[for=id_CV]
 {
     position: relative;
     left: 60vw;
-   
+    bottom: 52.5vh;
 }
 
 label[for=id_speciality]
 {  
     position: relative;
     left : 30vw;
-    
+    bottom: 35vh;
   
 }
 
@@ -175,7 +177,7 @@ label[for=id_speciality]
 {
     position: relative;
     left: 60vw;
-    
+    bottom: 70vh;
 }
 
 
@@ -183,7 +185,7 @@ label[for=id_license]
 {  
     position: relative;
     left : 30vw;
-    
+    bottom: 26vh;
   
 }
 
@@ -191,7 +193,7 @@ label[for=id_license]
 {
     position: relative;
     left: 60vw;
-    
+    bottom: 52.5vh;
 }
 
 
@@ -208,7 +210,7 @@ label[for=id_license]
     display: inline-flex;
     justify-content: space-between;
     position: relative;
-    bottom: 60vh;
+    bottom: 150vh;
     left: 50vw;
     gap: 30px;
 
@@ -227,4 +229,10 @@ label[for=id_license]
     bottom: 0.5vh;
 }
 
-
+#errors
+{
+    position: relative;
+    bottom: 70vh;
+    right: 40vw;
+    white-space: nowrap;
+}

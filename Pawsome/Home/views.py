@@ -13,7 +13,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.core.serializers import serialize
 from Pet.models  import Pet
-
+from .serializers import VSerializer
 
 import logging
 
@@ -59,7 +59,6 @@ def registerPage(request):
            
         else:
             pet_form = PetForm()
-            special_form = SpecialityForm()
             context = {'reg_form' : reg_form , 'pet_form' : pet_form,'special_form' : special_form}
             return render(request,'registerPage.html',context)
 
@@ -132,24 +131,25 @@ def verification(request,pk3,pk4):
         user = Users.objects.get(id=pk3)
         speciality = pk4
         verify_form = VerificationForm(instance=user)
+        dict = { 'password' : getattr(user,'password')}
+        request.session['dict'] =  dict
         user.delete()
         verify_form.fields['speciality'].initial = speciality
         verify_form.fields['speciality'].widget.attrs['readonly'] = True
-        
-
+    
         context = { 'verify_form' : verify_form , 'id' : pk3, 'speciality' : pk4}
 
         return render(request,'certification.html',context)
 
     elif request.method == 'POST':
-        verify_form = VerificationForm(request.POST,request.FILES)
-
-
-        if verify_form.is_valid():
+        verify_form = VerificationForm(request.POST.copy(),request.FILES.copy())
+        verify_form.data['password'] = request.session['dict'].get('password')
+        print(verify_form.data['password'])
+        if verify_form.is_valid():    
+            verify_form.clean()
             verify_form.save()
             return redirect('login')
         else:
-            verify_form.clean()
             context = { 'verify_form' : verify_form , 'id' : pk3, 'speciality' : pk4}
             return render(request,'certification.html',context)
 

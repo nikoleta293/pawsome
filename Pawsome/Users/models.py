@@ -1,15 +1,8 @@
-from contextlib import nullcontext
-from distutils.command import upload
-from email.policy import default
-from re import T
-from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
-from django.forms import ValidationError
 from Calendar.models import Appointment,Events
 import datetime
 from uuid import uuid4
-from django.core.validators import FileExtensionValidator
 
 
 from . managers import CustomUserManager
@@ -23,6 +16,7 @@ def get_default_profile_image():
 
 class Users (AbstractBaseUser): 
     username = models.CharField(max_length=50)
+    password = models.CharField(max_length=255)
     id = models.AutoField(primary_key=True,editable=False)
     email = models.EmailField(unique=True,verbose_name='email')
     is_admin = models.BooleanField(default=False)
@@ -37,11 +31,12 @@ class Users (AbstractBaseUser):
 
 
     Roles =(
+    ('','-------'),
     ('org','Organizations'),
     ('pros','Professional'),
     ('pet-owner','Pet Owner')
     )
-    role = models.CharField(max_length=50, choices=Roles)
+    role = models.CharField(max_length=50, choices=Roles,default='',)
    
     USERNAME_FIELD  = 'email'
     REQUIRED_FIELDS = ['username']
@@ -70,7 +65,8 @@ class PetOwner (Users):
 class Professional (Users):
     AFM = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
-    hours = models.TimeField(default='00:00')
+    opening  = models.TimeField(default='00:00')
+    closing = models.TimeField(default='00:00')
     telephone = models.CharField(max_length=12)
     appointment =  models.ManyToManyField(Appointment)
     #appointmentList
@@ -89,7 +85,7 @@ class Professional (Users):
 
 
 
-    REQUIRED_FIELDS = ['AFM','address','hours','telephone'
+    REQUIRED_FIELDS = ['AFM','address','opening','closing','telephone'
     'certificate','CV','license']
     
     
